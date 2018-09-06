@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.isco.Blog.Mapper.BlogTextMapper" >
+  <resultMap id="BaseResultMap" type="com.isco.Blog.POJO.BlogText" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="blog_id" property="blogId" jdbcType="INTEGER" />
+    <result column="text" property="text" jdbcType="VARCHAR" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from blog_text
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.isco.Blog.POJO.BlogText" useGeneratedKeys="true" keyProperty="id" >
+    insert into blog_text (blog_id, text)
+    values (#{blogId,jdbcType=INTEGER}, #{text,jdbcType=VARCHAR})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.isco.Blog.POJO.BlogText" >
+    update blog_text
+    set blog_id = #{blogId,jdbcType=INTEGER},
+      text = #{text,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select id, blog_id, text
+    from blog_text
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select id, blog_id, text
+    from blog_text
+  </select>
+</mapper>

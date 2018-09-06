@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.isco.Blog.Mapper.BlogMapper" >
+  <resultMap id="BaseResultMap" type="com.isco.Blog.POJO.Blog" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="user_id" property="userId" jdbcType="INTEGER" />
+    <result column="time" property="time" jdbcType="TIMESTAMP" />
+    <result column="comment_num" property="commentNum" jdbcType="INTEGER" />
+    <result column="love_num" property="loveNum" jdbcType="INTEGER" />
+    <result column="pic" property="pic" jdbcType="VARCHAR" />
+    <result column="blog_type_id" property="blogTypeId" jdbcType="INTEGER" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from blog
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.isco.Blog.POJO.Blog" useGeneratedKeys="true" keyProperty="id" >
+    insert into blog (title, user_id, time, 
+      comment_num, love_num, pic, 
+      blog_type_id)
+    values (#{title,jdbcType=VARCHAR}, #{userId,jdbcType=INTEGER}, #{time,jdbcType=TIMESTAMP}, 
+      #{commentNum,jdbcType=INTEGER}, #{loveNum,jdbcType=INTEGER}, #{pic,jdbcType=VARCHAR}, 
+      #{blogTypeId,jdbcType=INTEGER})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.isco.Blog.POJO.Blog" >
+    update blog
+    set title = #{title,jdbcType=VARCHAR},
+      user_id = #{userId,jdbcType=INTEGER},
+      time = #{time,jdbcType=TIMESTAMP},
+      comment_num = #{commentNum,jdbcType=INTEGER},
+      love_num = #{loveNum,jdbcType=INTEGER},
+      pic = #{pic,jdbcType=VARCHAR},
+      blog_type_id = #{blogTypeId,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select id, title, user_id, time, comment_num, love_num, pic, blog_type_id
+    from blog
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select id, title, user_id, time, comment_num, love_num, pic, blog_type_id
+    from blog
+  </select>
+</mapper>
