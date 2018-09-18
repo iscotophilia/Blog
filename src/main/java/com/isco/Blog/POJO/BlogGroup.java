@@ -1,13 +1,27 @@
 package com.isco.Blog.POJO;
 
+import java.util.List;
+
+import com.isco.Blog.ResultEntity.BlogUserEntity;
+
 public class BlogGroup {
-    private Integer id;
+    public List<BlogUserEntity> getBlogs() {
+		return blogs;
+	}
+
+	public void setBlogs(List<BlogUserEntity> blogs) {
+		this.blogs = blogs;
+	}
+
+	private Integer id;
 
     private String name;
 
     private Integer userId;
 
     private Integer blogId;
+    
+    private List<BlogUserEntity> blogs;
 
     public Integer getId() {
         return id;

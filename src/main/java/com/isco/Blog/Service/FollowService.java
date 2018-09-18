@@ -1,33 +1,17 @@
-package com.isco.Blog.Mapper;
+package com.isco.Blog.Service;
+
+import java.util.List;
 
 import com.isco.Blog.POJO.Follow;
 import com.isco.Blog.POJO.User;
 
-import java.util.List;
-
-/**
- * @author sazhijie
- * create time 2018/9/11 15:38
- * 用户关注表对应的DAO
- *
- */
-public interface FollowMapper {
-    int deleteByPrimaryKey(Integer id);
-
-    
-    
-
-    Follow selectByPrimaryKey(Integer id);
-
-    List<Follow> selectAll();
-
-    int updateByPrimaryKey(Follow record);
-    
-    List<Follow> selectByUserId(int id);
-    
-    int deleteByUserId(int id);
-    
-    /**
+public interface FollowService {
+	
+	List<Follow> selectByUserId(int userId);
+	
+	int deleteByUserId(int id);
+	
+	/**
      * 添加关注，根据用户id和followId来添加
      * @param record
      * @return int
@@ -50,4 +34,5 @@ public interface FollowMapper {
      * 返回关注信息
      */
     Follow selectByUserIdAndFollowId(Follow follow);
+
 }

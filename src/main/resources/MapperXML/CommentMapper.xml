@@ -22,6 +22,18 @@
       #{loveNum,jdbcType=INTEGER}, #{time,jdbcType=TIMESTAMP}, #{blogId,jdbcType=INTEGER}
       )
   </insert>
+  <insert id="append" parameterType="com.isco.Blog.POJO.Comment" useGeneratedKeys="true" keyProperty="id" >
+    insert into comment (comment, user_id, parent_id, 
+      love_num, time, blog_id
+      )
+    values (#{comment,jdbcType=VARCHAR}, #{userId,jdbcType=INTEGER}, #{parentId,jdbcType=INTEGER}, 
+      #{loveNum,jdbcType=INTEGER}, #{time,jdbcType=TIMESTAMP}, #{blogId,jdbcType=INTEGER}
+      )
+    update comment
+    set 
+      reply_num=reply_num+1
+    where id=#{parentId,jdbcType=INTEGER}
+  </insert>
   <update id="updateByPrimaryKey" parameterType="com.isco.Blog.POJO.Comment" >
     update comment
     set comment = #{comment,jdbcType=VARCHAR},
@@ -33,12 +45,34 @@
     where id = #{id,jdbcType=INTEGER}
   </update>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-    select id, comment, user_id, parent_id, love_num, time, blog_id
+    select id, comment, user_id, parent_id, love_num, time, blog_id, reply_num
     from comment
     where id = #{id,jdbcType=INTEGER}
   </select>
   <select id="selectAll" resultMap="BaseResultMap" >
-    select id, comment, user_id, parent_id, love_num, time, blog_id
+    select id, comment, user_id, parent_id, love_num, time, blog_id, reply_num
     from comment
+  </select>
+    <select id="selectAllByUserID" resultMap="BaseResultMap"  parameterType="java.lang.Integer">
+    select id, comment, user_id, parent_id, love_num, time, blog_id, reply_num
+    from comment 
+    where user_id = #{userID,jdbcType=INTEGER}
+  </select>
+      <select id="selectAllByBlogID" resultMap="BaseResultMap"  parameterType="java.lang.Integer">
+    select id, comment, user_id, parent_id, love_num, time, blog_id, reply_num
+    from comment 
+    where blog_id = #{blogID,jdbcType=INTEGER}
+    order by time desc limit #{start,jdbcType=INTEGER},#{size,jdbcType=INTEGER}
+  </select>
+  <select id="selectAllByParentID" resultMap="BaseResultMap"  parameterType="java.lang.Integer">
+    select id, comment, user_id, parent_id, love_num, time, blog_id, reply_num
+    from comment 
+    where id = #{parentID,jdbcType=INTEGER}
+    order by time desc limit #{start,jdbcType=INTEGER},#{size,jdbcType=INTEGER}
+  </select>
+  <select id="selectAllByLove" resultMap="BaseResultMap"  parameterType="java.lang.Integer">
+    select id, comment, user_id, parent_id, love_num, time, blog_id, reply_num
+    from comment 
+    where blog_id = #{blogID,jdbcType=INTEGER} limit 4
   </select>
 </mapper>

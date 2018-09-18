@@ -1,4 +1,4 @@
-package com.isco.Blog.POJO;
+package com.isco.Blog.ResultEntity;
 
 import java.util.Date;
 
@@ -6,13 +6,30 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
-public class Blog {
-	public Integer getBlogGroupId() {
-		return blogGroupId;
+public class BlogTextUserEntity {
+	
+	public String getName() {
+		return name;
 	}
 
-	public void setBlogGroupId(Integer blogGroupId) {
-		this.blogGroupId = blogGroupId;
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getImg() {
+		return img;
+	}
+
+	public void setImg(String img) {
+		this.img = img;
+	}
+
+	public String getSign() {
+		return sign;
+	}
+
+	public void setSign(String sign) {
+		this.sign = sign;
 	}
 
 	private Integer id;
@@ -33,7 +50,13 @@ public class Blog {
 
 	private Integer blogTypeId;
 	
-	private Integer blogGroupId;
+	private String name;
+	
+	private String img;
+	
+	private String sign;
+	
+	private String blogText;
 
 	public Integer getId() {
 		return id;
@@ -98,4 +121,5 @@ public class Blog {
 	public void setBlogTypeId(Integer blogTypeId) {
 		this.blogTypeId = blogTypeId;
 	}
+
 }

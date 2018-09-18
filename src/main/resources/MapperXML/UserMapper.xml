@@ -8,11 +8,32 @@
 		<result column="img" property="img" jdbcType="VARCHAR" />
 		<result column="qq_id" property="qqId" jdbcType="VARCHAR" />
 		<result column="wb_id" property="wbId" jdbcType="VARCHAR" />
-		<result column="grant" property="grant" jdbcType="INTEGER" />
+		<result column="state" property="state" jdbcType="INTEGER" />
 		<result column="sign" property="sign" jdbcType="VARCHAR" />
 		<result column="number" property="number" jdbcType="VARCHAR" />
 		<result column="sex" property="sex" jdbcType="CHAR" />
 	</resultMap>
+
+	<!-- 根据用户id查询其关注的人 -->
+	<select id="selectUserByFollow" resultMap="BaseResultMap">
+		select id, name, img,
+		sign, sex
+		from user
+		where id in
+		(select follow_id from follow where
+		user_id=#{userId}) limit #{param},#{page}
+	</select>
+
+	<select id="selectUserByFollowCount"
+		resultType="java.lang.Integer">
+		select count(*) from follow where user_id=#{userId}
+	</select>
+
+	<select id="selectUserByWasFollowedCount"
+		resultType="java.lang.Integer">
+		select count(*) from follow where follow_id=#{followId}
+	</select>
+
 	<delete id="deleteByPrimaryKey"
 		parameterType="java.lang.Integer">
 		delete from user
@@ -20,57 +41,162 @@
 	</delete>
 	<insert id="insert" parameterType="com.isco.Blog.POJO.User"
 		useGeneratedKeys="true" keyProperty="id">
-		insert into user (name, pwd, img,
-		qq_id, wb_id, grant,
+		insert into user (name, pwd,
+		qq_id, wb_id, state,
 		sign, number, sex)
 		values
-		(#{name,jdbcType=VARCHAR}, #{pwd,jdbcType=VARCHAR},
-		#{img,jdbcType=VARCHAR},
+		(#{name,jdbcType=VARCHAR}, PASSWORD(#{pwd,jdbcType=VARCHAR}),
 		#{qqId,jdbcType=VARCHAR},
-		#{wbId,jdbcType=VARCHAR}, #{grant,jdbcType=INTEGER},
-		#{sign,jdbcType=VARCHAR}, #{number,jdbcType=VARCHAR},
+		#{wbId,jdbcType=VARCHAR},
+		#{state,jdbcType=INTEGER},
+		#{sign,jdbcType=VARCHAR},
+		#{number,jdbcType=VARCHAR},
 		#{sex,jdbcType=CHAR})
 	</insert>
 	<update id="updateByPrimaryKey"
 		parameterType="com.isco.Blog.POJO.User">
 		update user
-		set name = #{name,jdbcType=VARCHAR},
-		pwd =
-		#{pwd,jdbcType=VARCHAR},
-		img = #{img,jdbcType=VARCHAR},
-		qq_id =
-		#{qqId,jdbcType=VARCHAR},
-		wb_id = #{wbId,jdbcType=VARCHAR},
-		grant =
-		#{grant,jdbcType=INTEGER},
-		sign = #{sign,jdbcType=VARCHAR},
-		number =
-		#{number,jdbcType=VARCHAR},
-		sex = #{sex,jdbcType=CHAR}
+		<set>
+			<if test="name!=null and name!=''">
+				name = #{name,jdbcType=VARCHAR},
+			</if>
+			<if test="pwd!=null and pwd!=''">
+				pwd =
+				PASSWORD(#{pwd,jdbcType=VARCHAR}),
+			</if>
+			<if test="qqId!=null and qqId!=''">
+				qq_id =
+				#{qqId,jdbcType=VARCHAR},
+			</if>
+			<if test="wbId!=null and wbId!=''">
+				wb_id = #{wbId,jdbcType=VARCHAR},
+			</if>
+			<if test="state!=null and state!=''">
+				state =
+				#{state,jdbcType=INTEGER},
+			</if>
+			<if test="sign!=null and sign!=''">
+				sign = #{sign,jdbcType=VARCHAR},
+			</if>
+			<if test="number!=null and number!=''">
+				number =
+				#{number,jdbcType=VARCHAR},
+			</if>
+			<if test="sex!=null and sex!=''">
+				sex = #{sex,jdbcType=CHAR},
+			</if>
+			<if test="img!=null and img!=''">
+				img = #{img,jdbcType=VARCHAR}
+			</if>
+		</set>
 		where id =
 		#{id,jdbcType=INTEGER}
 	</update>
 	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
 		parameterType="java.lang.Integer">
-		select id, name, pwd, img, qq_id, wb_id, grant, sign,
+		select name, img, state, sign,
 		number, sex
 		from user
-		where id = #{id,jdbcType=INTEGER}
+		where
+		id = #{id,jdbcType=INTEGER}
 	</select>
 	<select id="selectAll" resultMap="BaseResultMap">
 		select id, name, pwd, img,
-		qq_id, wb_id, grant, sign, number, sex
+		qq_id, wb_id, state, sign, number, sex
 		from user
 	</select>
 
 	<!-- 手机号密码登录 -->
 	<select id="selectByNumberAndPwd" resultMap="BaseResultMap">
-		select * from user
-		where number=#{number} and pwd=#{pwd}
+		select id, name,img,
+		qq_id, wb_id, state, sign, sex from user
+		where number=#{number} and
+		pwd=PASSWORD(#{pwd})
 	</select>
 
 	<!-- 通过验证码阶段后，直接用手机登录 -->
-	<select id="selectByNumber">
-		select * from user where number=#{number}
+	<select id="selectByNumber" resultMap="BaseResultMap">
+		select id, name, img,
+		qq_id, wb_id, state, sign, sex
+		from user where number=#{number}
 	</select>
+
+	<!-- QQ登录 -->
+	<select id="selectByQQId" resultMap="BaseResultMap">
+		select id, name, img, wb_id,
+		state, sign, number, sex
+		from user where qq_id=#{qqId}
+	</select>
+
+	<!-- 微博登录 -->
+	<select id="selectByWBId" resultMap="BaseResultMap">
+		select id, name, img, qq_id,
+		state, sign, number, sex
+		from user where wb_id=#{wbId}
+	</select>
+
+	<!-- 更新信息 -->
+	<update id="updateByNumber"
+		parameterType="com.isco.Blog.POJO.User">
+		update user
+		<set>
+			<if test="name!=null and name!=''">
+				name = #{name,jdbcType=VARCHAR},
+			</if>
+			<if test="pwd!=null and pwd!=''">
+				pwd =
+				PASSWORD(#{pwd,jdbcType=VARCHAR}),
+			</if>
+			<if test="qqId!=null and qqId!=''">
+				qq_id =
+				#{qqId,jdbcType=VARCHAR},
+			</if>
+			<if test="wbId!=null and wbId!=''">
+				wb_id = #{wbId,jdbcType=VARCHAR},
+			</if>
+			<if test="state!=null and state!=''">
+				state =
+				#{state,jdbcType=INTEGER},
+			</if>
+			<if test="sign!=null and sign!=''">
+				sign = #{sign,jdbcType=VARCHAR},
+			</if>
+			<if test="number!=null and number!=''">
+				number =
+				#{number,jdbcType=VARCHAR},
+			</if>
+			<if test="sex!=null and sex!=''">
+				sex = #{sex,jdbcType=CHAR}
+			</if>
+		</set>
+		where number =
+		#{number}
+	</update>
+	
+	<resultMap type="Map" id="TopUserMap">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="name" property="name" jdbcType="VARCHAR" />
+		<result column="img" property="img" jdbcType="VARCHAR" />
+		<result column="sign" property="sign" jdbcType="VARCHAR" />
+		<result column="number" property="number" jdbcType="VARCHAR" />
+		<result column="sex" property="sex" jdbcType="CHAR" />
+		<result column="blogNum" property="blogNum" jdbcType="INTEGER"/>
+		<result column="loveNum" property="loveNum" jdbcType="INTEGER"/>
+		<result column="followNum" property="followNum" jdbcType="INTEGER"/>
+	</resultMap>
+
+	<!-- 获取用户排行，推荐用户功能 -->
+	<select id="selectTopUser" resultMap="TopUserMap">
+		select u.id,
+		u.name,u.img,u.sign,u.sex,
+		(select count(*) from blog where
+		user_id=u.id)as blogNum ,
+		(select SUM(love_num) from blog where user_id=u.id) as loveNum,
+		(select
+		count(*) from follow where follow_id=u.id) as followNum
+		from user u
+		order by loveNum desc limit 0,10
+	</select>
+	
+
 </mapper>

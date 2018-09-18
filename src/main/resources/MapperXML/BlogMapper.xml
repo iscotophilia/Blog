@@ -1,46 +1,268 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.isco.Blog.Mapper.BlogMapper" >
-  <resultMap id="BaseResultMap" type="com.isco.Blog.POJO.Blog" >
-    <id column="id" property="id" jdbcType="INTEGER" />
-    <result column="title" property="title" jdbcType="VARCHAR" />
-    <result column="user_id" property="userId" jdbcType="INTEGER" />
-    <result column="time" property="time" jdbcType="TIMESTAMP" />
-    <result column="comment_num" property="commentNum" jdbcType="INTEGER" />
-    <result column="love_num" property="loveNum" jdbcType="INTEGER" />
-    <result column="pic" property="pic" jdbcType="VARCHAR" />
-    <result column="blog_type_id" property="blogTypeId" jdbcType="INTEGER" />
-  </resultMap>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
-    delete from blog
-    where id = #{id,jdbcType=INTEGER}
-  </delete>
-  <insert id="insert" parameterType="com.isco.Blog.POJO.Blog" useGeneratedKeys="true" keyProperty="id" >
-    insert into blog (title, user_id, time, 
-      comment_num, love_num, pic, 
-      blog_type_id)
-    values (#{title,jdbcType=VARCHAR}, #{userId,jdbcType=INTEGER}, #{time,jdbcType=TIMESTAMP}, 
-      #{commentNum,jdbcType=INTEGER}, #{loveNum,jdbcType=INTEGER}, #{pic,jdbcType=VARCHAR}, 
-      #{blogTypeId,jdbcType=INTEGER})
-  </insert>
-  <update id="updateByPrimaryKey" parameterType="com.isco.Blog.POJO.Blog" >
-    update blog
-    set title = #{title,jdbcType=VARCHAR},
-      user_id = #{userId,jdbcType=INTEGER},
-      time = #{time,jdbcType=TIMESTAMP},
-      comment_num = #{commentNum,jdbcType=INTEGER},
-      love_num = #{loveNum,jdbcType=INTEGER},
-      pic = #{pic,jdbcType=VARCHAR},
-      blog_type_id = #{blogTypeId,jdbcType=INTEGER}
-    where id = #{id,jdbcType=INTEGER}
-  </update>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-    select id, title, user_id, time, comment_num, love_num, pic, blog_type_id
-    from blog
-    where id = #{id,jdbcType=INTEGER}
-  </select>
-  <select id="selectAll" resultMap="BaseResultMap" >
-    select id, title, user_id, time, comment_num, love_num, pic, blog_type_id
-    from blog
-  </select>
+<mapper namespace="com.isco.Blog.Mapper.BlogMapper">
+	<resultMap id="BaseResultMap" type="com.isco.Blog.POJO.Blog">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="title" property="title" jdbcType="VARCHAR" />
+		<result column="user_id" property="userId" jdbcType="INTEGER" />
+		<result column="time" property="time" jdbcType="TIMESTAMP" />
+		<result column="comment_num" property="commentNum"
+			jdbcType="INTEGER" />
+		<result column="love_num" property="loveNum" jdbcType="INTEGER" />
+		<result column="pic" property="pic" jdbcType="VARCHAR" />
+		<result column="blog_type_id" property="blogTypeId"
+			jdbcType="INTEGER" />
+		<result column="blog_group_id" property="blogGroupId"
+			jdbcType="INTEGER" />
+	</resultMap>
+
+	<!-- 伴随用户信息查询的结果集 -->
+	<resultMap id="ListResultMap"
+		type="com.isco.Blog.ResultEntity.BlogUserEntity">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="title" property="title" jdbcType="VARCHAR" />
+		<result column="user_id" property="userId" jdbcType="INTEGER" />
+		<result column="time" property="time" jdbcType="TIMESTAMP" />
+		<result column="comment_num" property="commentNum"
+			jdbcType="INTEGER" />
+		<result column="love_num" property="loveNum" jdbcType="INTEGER" />
+		<result column="pic" property="pic" jdbcType="VARCHAR" />
+		<result column="type" property="blogTypeName"
+			jdbcType="VARCHAR" />
+
+		<result column="name" property="name" jdbcType="VARCHAR" />
+		<result column="img" property="img" jdbcType="VARCHAR" />
+		<result column="sign" property="sign" jdbcType="VARCHAR" />
+	</resultMap>
+
+	<delete id="deleteByPrimaryKey"
+		parameterType="java.lang.Integer">
+		delete from blog
+		where id = #{id,jdbcType=INTEGER}
+	</delete>
+	<insert id="insert" parameterType="com.isco.Blog.POJO.Blog"
+		useGeneratedKeys="true" keyProperty="id">
+		insert into blog (title, user_id,
+		time, pic,
+		blog_type_id,blog_group_id)
+		values
+		(#{title,jdbcType=VARCHAR}, #{userId,jdbcType=INTEGER},
+		#{time,jdbcType=TIMESTAMP},
+		#{pic,jdbcType=VARCHAR},
+		#{blogTypeId,jdbcType=INTEGER},
+		#{blogGroupId})
+	</insert>
+	<update id="updateByPrimaryKey"
+		parameterType="com.isco.Blog.POJO.Blog">
+		update blog
+		<set>
+			<if test="title!=null and name!=''">
+				title = #{title,jdbcType=VARCHAR},
+			</if>
+			<if test="userId!=null and userId!=''">
+				user_id = #{userId,jdbcType=INTEGER},
+			</if>
+			<if test="commentNum!=null and commentNum!=''">
+				comment_num =comment_num+1,
+			</if>
+			<if test="loveNum!=null and loveNum!=''">
+				love_num = love_num+1,
+			</if>
+			<if test="pic!=null and pic!=''">
+				pic = #{pic,jdbcType=VARCHAR},
+			</if>
+			<if test="blogTypeId!=null and blogTypeId!=''">
+				blog_type_id =
+				#{blogTypeId,jdbcType=INTEGER}
+			</if>
+		</set>
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Integer">
+		select id, title, user_id, time, comment_num, love_num,
+		pic, blog_type_id
+		from blog
+		where id = #{id,jdbcType=INTEGER}
+	</select>
+	<select id="selectAll" resultMap="BaseResultMap">
+		select id, title, user_id,
+		time, comment_num, love_num, pic, blog_type_id
+		from blog
+	</select>
+
+	<!-- 根据类别查询 -->
+	<select id="selectByTimeWithType" resultMap="ListResultMap">
+		select
+		blog.*,user.name,user.sign,user.img,blog_type.name as type
+		from
+		blog,user,blog_type
+		where
+		blog_type.id=#{blogTypeId} and
+		blog.user_id=user.id and
+		blog.blog_type_id=blog_type.id
+		order by time
+		desc limit
+		#{param},#{page}
+	</select>
+
+	<!-- 计算每个类别的博客数量 -->
+	<select id="selectByTimeWithTypeCount"
+		resultType="java.lang.Integer">
+		select count(*) from blog where blog_type_id=#{blogTypeId}
+	</select>
+
+	<select id="selectByTime" resultMap="ListResultMap">
+		select
+		blog.*,user.name,user.sign,user.img,blog_type.name as type
+		from
+		user,blog left join blog_type on blog.blog_type_id=blog_type.id
+		where
+		blog.user_id=user.id
+		order by time desc limit
+		#{param},#{page}
+	</select>
+	
+	<select id="selectByGroup" resultMap="ListResultMap">
+		select
+		blog.*,user.name,user.sign,user.img,blog_type.name as type
+		from
+		user,blog left join blog_type on blog.blog_type_id=blog_type.id
+		where
+		blog.id=#{id} and blog.user_id=user.id
+		order by time desc
+	</select>
+
+	<select id="selectByLove" resultMap="ListResultMap">
+		select
+		blog.*,user.name,user.sign,user.img,blog_type.name as type
+		from
+		user,blog left join blog_type on blog.blog_type_id=blog_type.id where
+		blog.user_id=user.id
+		order by love_num desc limit
+		#{param},#{page}
+	</select>
+
+	<!-- 查询某个用户的博客 -->
+	<select id="selectByUserId" resultMap="ListResultMap">
+		select
+		blog.*,user.name,user.sign,user.img,blog_type.name as type
+		from
+		user,blog left join blog_type on blog.blog_type_id=blog_type.id where
+		user.id=#{userId} and blog.user_id=user.id
+		order by id desc limit
+		#{param},#{page}
+	</select>
+
+	<!-- 根据关注表查询博客 -->
+	<select id="selectByFollowId" resultMap="ListResultMap">
+		select distinct
+		b.*,u.name,u.img,u.sign,blog_type.name as type
+		from user u,follow
+		f,blog b left join blog_type on b.blog_type_id=blog_type.id
+		where u.id
+		in
+		(select follow_id from follow where
+		user_id=#{userId})
+		and u.id
+		=b.user_id
+		order by time desc limit
+		#{param},#{page}
+	</select>
+
+	<select id="selectCount" resultType="java.lang.Integer">
+		select count(*) from blog
+	</select>
+
+	<!-- 查询用户关注的人的博客数量 -->
+	<select id="selectByFollowIdCount"
+		resultType="java.lang.Integer">
+		select count(distinct b.id) from blog b,follow f,user u
+		where u.id in
+		(select follow_id from follow where user_id=#{userId})
+		and u.id=b.user_id
+	</select>
+
+	<!-- 查询用户的博客数量 -->
+	<select id="selectByUserIdCount" resultType="java.lang.Integer">
+		select count(*) from
+		blog where
+		user_id=#{userId}
+	</select>
+
+	<!-- 查询用户点赞过的博客 -->
+	<select id="selectByUserIdAndLove" resultMap="ListResultMap">
+		select
+		b.*,u.name,u.sign,u.img,blog_type.name as type
+		from love l,user u,
+		blog b left join blog_type on b.blog_type_id=blog_type.id
+		where
+		l.user_id=#{userId} and u.id=b.user_id
+		and
+		l.blog_id=b.id
+		order by
+		b.time
+		desc
+		limit #{param},#{page}
+	</select>
+
+	<!-- 查询用户点赞过的博客的数量 -->
+	<select id="selectByUserIdAndLoveCount"
+		resultType="java.lang.Integer">
+		select count(*)
+		from love
+		where
+		user_id=#{userId}
+	</select>
+
+	<!--查询用户评论过的博客 -->
+	<select id="selectByUserIdAndComment" resultMap="ListResultMap">
+		select
+		b.*,u.name,u.sign,u.img,blog_type.name as type
+		from user
+		u,comment
+		c,blog b left join blog_type on b.blog_type_id=blog_type.id
+		where
+		c.user_id=#{userId}
+		and u.id=b.user_id and
+		c.blog_id=b.id order by
+		b.time
+		limit
+		#{param},#{page}
+	</select>
+
+	<!-- 查询用户评论过的博客数量 -->
+	<select id="selectByUserIdAndCommentCount"
+		resultType="java.lang.Integer">
+		select count(distinct blog_id)
+		from comment
+		where
+		user_id=#{userId}
+	</select>
+
+	<!-- 查询用户收藏的博客 -->
+	<select id="selectByUserIdAndSave" resultMap="ListResultMap">
+		select
+		b.*,u.name,u.sign,u.img,blog_type.name as type
+		from user u,save
+		s,blog b
+		left join blog_type on b.blog_type_id=blog_type.id
+		where
+		s.user_id=#{userId} and
+		u.id=b.user_id and
+		s.blog_id=b.id order by
+		b.time
+		limit
+		#{param},#{page}
+	</select>
+
+	<!-- 查询用户收藏的总条数 -->
+	<select id="selectByUserIdAndSaveCount"
+		resultType="java.lang.Integer">
+		select count(*)
+		from save
+		where
+		user_id=#{userId}
+	</select>
+
 </mapper>

@@ -13,4 +13,6 @@ public interface BlogTextMapper {
     List<BlogText> selectAll();
 
     int updateByPrimaryKey(BlogText record);
+    
+    String selectByBlogId(int blogId);
 }

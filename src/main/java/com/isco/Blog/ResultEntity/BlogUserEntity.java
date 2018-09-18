@@ -1,18 +1,55 @@
-package com.isco.Blog.POJO;
+package com.isco.Blog.ResultEntity;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
-public class Blog {
-	public Integer getBlogGroupId() {
-		return blogGroupId;
+/**
+ * @author sazhijie
+ * create time 2018/9/13 9:48
+ * 用户与博客的组合实体
+ *
+ */
+public class BlogUserEntity implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 5254247723804204441L;
+
+	public String getBlogTypeName() {
+		return blogTypeName;
 	}
 
-	public void setBlogGroupId(Integer blogGroupId) {
-		this.blogGroupId = blogGroupId;
+	public void setBlogTypeName(String blogTypeName) {
+		this.blogTypeName = blogTypeName;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getImg() {
+		return img;
+	}
+
+	public void setImg(String img) {
+		this.img = img;
+	}
+
+	public String getSign() {
+		return sign;
+	}
+
+	public void setSign(String sign) {
+		this.sign = sign;
 	}
 
 	private Integer id;
@@ -31,10 +68,14 @@ public class Blog {
 	
 	private String pic;
 
-	private Integer blogTypeId;
+	private String blogTypeName;
 	
-	private Integer blogGroupId;
-
+	private String name;
+	
+	private String img;
+	
+	private String sign;
+	
 	public Integer getId() {
 		return id;
 	}
@@ -91,11 +132,4 @@ public class Blog {
 		this.pic = pic == null ? null : pic.trim();
 	}
 
-	public Integer getBlogTypeId() {
-		return blogTypeId;
-	}
-
-	public void setBlogTypeId(Integer blogTypeId) {
-		this.blogTypeId = blogTypeId;
-	}
 }

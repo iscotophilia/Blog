@@ -78,58 +78,8 @@
 				value=""/> -->
 		</javaClientGenerator>		
 		
-		<table tableName="blog">
+		<table tableName="test">
 			<!-- 参考 javaModelGenerator 的 constructorBased属性 -->
-			<property name="constructorBased" value="false" />
-			<generatedKey column="id" sqlStatement="JDBC" />
-		</table>
-		
-		<table tableName="follow">
-			<!-- 参考 javaModelGenerator 的 constructorBased属性 -->
-			<property name="constructorBased" value="false" />
-			<generatedKey column="id" sqlStatement="JDBC" />
-		</table>
-		
-		<table tableName="blog_group">
-			<!-- 参考 javaModelGenerator 的 constructorBased属性 -->
-			<property name="constructorBased" value="false" />
-			<generatedKey column="id" sqlStatement="JDBC" />
-		</table>
-		
-		<table tableName="blog_text">
-			<!-- 参考 javaModelGenerator 的 constructorBased属性 -->
-			<property name="constructorBased" value="false" />
-			<generatedKey column="id" sqlStatement="JDBC" />
-		</table>
-		
-		<table tableName="blog_type">
-			<!-- 参考 javaModelGenerator 的 constructorBased属性 -->
-			<property name="constructorBased" value="false" />
-			<generatedKey column="id" sqlStatement="JDBC" />
-		</table>
-		
-		<table tableName="comment">
-			<!-- 参考 javaModelGenerator 的 constructorBased属性 -->
-			<property name="constructorBased" value="false" />
-			<generatedKey column="id" sqlStatement="JDBC" />
-		</table>
-		
-		<table tableName="report_blog">
-			<property name="constructorBased" value="false" />
-			<generatedKey column="id" sqlStatement="JDBC" />
-		</table>
-		
-		<table tableName="report_comment">
-			<property name="constructorBased" value="false" />
-			<generatedKey column="id" sqlStatement="JDBC" />
-		</table>
-		
-		<table tableName="save">
-			<property name="constructorBased" value="false" />
-			<generatedKey column="id" sqlStatement="JDBC" />
-		</table>
-		
-		<table tableName="user">
 			<property name="constructorBased" value="false" />
 			<generatedKey column="id" sqlStatement="JDBC" />
 		</table>

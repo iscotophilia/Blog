@@ -1,12 +1,19 @@
 package com.isco.Blog.POJO;
 
-import java.io.Serializable;
+import java.util.List;
 
-public class User implements Serializable {
-    /**
-	 * 
-	 */
-	private static final long serialVersionUID = -4480131259873695324L;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+/**
+ * @author sazhijie
+ * time 2018/9/6 17:05
+ * 用户实体类
+ *
+ */
+@JsonIgnoreProperties(value = {"handler"})
+public class User {
 
 	private Integer id;
 
@@ -20,13 +27,17 @@ public class User implements Serializable {
 
     private String wbId;
 
-    private Integer grant;
+    private Integer state;
 
     private String sign;
 
     private String number;
 
     private String sex;
+    
+    private List<Follow> follows;
+    
+    //Getter and Setter
 
     public Integer getId() {
         return id;
@@ -76,12 +87,12 @@ public class User implements Serializable {
         this.wbId = wbId == null ? null : wbId.trim();
     }
 
-    public Integer getGrant() {
-        return grant;
+    public Integer getState() {
+        return state;
     }
 
-    public void setGrant(Integer grant) {
-        this.grant = grant;
+    public void setState(Integer state) {
+        this.state = state;
     }
 
     public String getSign() {
@@ -107,4 +118,13 @@ public class User implements Serializable {
     public void setSex(String sex) {
         this.sex = sex == null ? null : sex.trim();
     }
+	
+    @JsonIgnore
+	public List<Follow> getFollows() {
+		return follows;
+	}
+
+	public void setFollows(List<Follow> follows) {
+		this.follows = follows;
+	}
 }

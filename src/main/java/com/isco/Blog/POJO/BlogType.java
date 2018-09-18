@@ -1,7 +1,12 @@
 package com.isco.Blog.POJO;
 
+import java.util.List;
+
+import com.isco.Blog.ResultEntity.BlogUserEntity;
+
 public class BlogType {
-    private Integer id;
+
+	private Integer id;
 
     private String name;
 
@@ -12,7 +17,7 @@ public class BlogType {
     private Integer num;
 
     private Integer attention;
-
+    
     public Integer getId() {
         return id;
     }

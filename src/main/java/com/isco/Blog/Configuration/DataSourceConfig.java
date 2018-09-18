@@ -14,11 +14,18 @@ import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
+import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
+import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.serializer.JdkSerializationRedisSerializer;
+import org.springframework.data.redis.serializer.StringRedisSerializer;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.TransactionManagementConfigurer;
 
 import com.isco.Blog.DataSource.DynamicDataSource;
+
+import redis.clients.jedis.JedisPoolConfig;
 
 /**
  * @author sazhijie
@@ -68,5 +75,4 @@ public class DataSourceConfig {
 	PlatformTransactionManager initPlamTransaction(DataSource dataSource) {
 		return new DataSourceTransactionManager(dataSource);
 	}
-
 }

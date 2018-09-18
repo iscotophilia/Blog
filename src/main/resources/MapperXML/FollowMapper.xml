@@ -1,32 +1,70 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.isco.Blog.Mapper.FollowMapper" >
-  <resultMap id="BaseResultMap" type="com.isco.Blog.POJO.Follow" >
-    <id column="id" property="id" jdbcType="INTEGER" />
-    <result column="user_id" property="userId" jdbcType="INTEGER" />
-    <result column="follow_id" property="followId" jdbcType="INTEGER" />
-  </resultMap>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
-    delete from follow
-    where id = #{id,jdbcType=INTEGER}
-  </delete>
-  <insert id="insert" parameterType="com.isco.Blog.POJO.Follow" useGeneratedKeys="true" keyProperty="id" >
-    insert into follow (user_id, follow_id)
-    values (#{userId,jdbcType=INTEGER}, #{followId,jdbcType=INTEGER})
-  </insert>
-  <update id="updateByPrimaryKey" parameterType="com.isco.Blog.POJO.Follow" >
-    update follow
-    set user_id = #{userId,jdbcType=INTEGER},
-      follow_id = #{followId,jdbcType=INTEGER}
-    where id = #{id,jdbcType=INTEGER}
-  </update>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-    select id, user_id, follow_id
-    from follow
-    where id = #{id,jdbcType=INTEGER}
-  </select>
-  <select id="selectAll" resultMap="BaseResultMap" >
-    select id, user_id, follow_id
-    from follow
-  </select>
+<mapper namespace="com.isco.Blog.Mapper.FollowMapper">
+	<resultMap id="BaseResultMap"
+		type="com.isco.Blog.POJO.Follow">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="user_id" property="userId" jdbcType="INTEGER" />
+		<result column="follow_id" property="followId"
+			jdbcType="INTEGER" />
+	</resultMap>
+
+	<delete id="deleteByPrimaryKey"
+		parameterType="java.lang.Integer">
+		delete from follow
+		where id = #{id,jdbcType=INTEGER}
+	</delete>
+	<insert id="insert" parameterType="com.isco.Blog.POJO.Follow"
+		useGeneratedKeys="true" keyProperty="id">
+		insert into follow (user_id,
+		follow_id)
+		values (#{userId,jdbcType=INTEGER},
+		#{followId,jdbcType=INTEGER})
+	</insert>
+	<update id="updateByPrimaryKey"
+		parameterType="com.isco.Blog.POJO.Follow">
+		update follow
+		set user_id = #{userId,jdbcType=INTEGER},
+		follow_id = #{followId,jdbcType=INTEGER}
+		where id =
+		#{id,jdbcType=INTEGER}
+	</update>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Integer">
+		select id, user_id, follow_id
+		from follow
+		where id =
+		#{id,jdbcType=INTEGER}
+	</select>
+	<select id="selectAll" resultMap="BaseResultMap">
+		select id, user_id, follow_id
+		from follow
+	</select>
+
+	<!-- 查询 -->
+	<select id="selectByUserId" resultMap="BaseResultMap">
+		select follow_id
+		from
+		follow
+		where user_id = #{userId}
+	</select>
+
+	<!-- 删除 -->
+	<delete id="deleteByUserId" parameterType="java.lang.Integer">
+		delete from follow
+		where user_id = #{userId,jdbcType=INTEGER}
+	</delete>
+
+	<!-- 取消关注功能 -->
+	<delete id="deleteByUserIdAndFollowId"
+		parameterType="com.isco.Blog.POJO.Follow">
+		delete from follow
+		where user_id=#{userId} and
+		follow_id=#{followId}
+	</delete>
+
+	<select id="selectByUserIdAndFollowId" resultMap="BaseResultMap">
+		select id from
+		follow where user_id=#{userId} and follow_id=#{followId}
+	</select>
 </mapper>
