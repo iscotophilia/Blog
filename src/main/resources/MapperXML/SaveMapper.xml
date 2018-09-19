@@ -39,4 +39,11 @@
 		select id from save
 		where user_id=#{userId} and blog_id=#{blogId}
 	</select>
+	
+	<!-- 取消关注 -->
+	<delete id="deleteByUserIdAndBlogId"
+		parameterType="java.lang.Integer">
+		delete from save
+		where user_id = #{userId} and blog_id=#{blogId}
+	</delete>
 </mapper>

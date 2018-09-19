@@ -132,4 +132,13 @@ public interface BlogMapper {
     
     List<BlogUserEntity> selectByGroup(int id);
     
+    /**
+     * 减少点赞数和评论数
+     * @param blog
+     * @return
+     */
+    int deleteLoveNumOrCommentNum(Blog blog);
+    
+    int selectLoveNumByUserId(int userId);
+    
 }

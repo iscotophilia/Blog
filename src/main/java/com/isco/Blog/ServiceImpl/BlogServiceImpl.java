@@ -256,39 +256,9 @@ public class BlogServiceImpl implements BlogService {
 		return blogTextMapper.insert(blogText);
 	}
 
-	/* 点赞
-	 * @see com.isco.Blog.Service.BlogService#updateLove(int, int)
+	/* 根据类型来查看博客
+	 * @see com.isco.Blog.Service.BlogService#selectByTimeWithType(int, int, int)
 	 */
-	@Override
-	public int updateLove(int userId, int blogId) {
-		Love love = new Love();
-		love.setUserId(userId);
-		love.setBlogId(blogId);
-		if(loveMapper.selectByUserIdAndBlogId(love)!=null)
-			return 1;
-		Blog blog = new Blog();
-		blog.setId(blogId);
-		blog.setLoveNum(1);
-		blogMapper.updateByPrimaryKey(blog);
-		return loveMapper.insert(love);
-	}
-	
-	/* 收藏
-	 * @see com.isco.Blog.Service.BlogService#updateSave(int, int)
-	 */
-	@Override
-	public int updateSave(int userId, int blogId) {
-		Save save = new Save();
-		save.setUserId(userId);
-		save.setBlogId(blogId);
-		if(saveMapper.selectByUserIdAndBlogId(save)!=null)
-			return 1;
-		Blog blog = new Blog();
-		blog.setId(blogId);
-		blog.setCommentNum(1);
-		return blogMapper.updateByPrimaryKey(blog);
-	}
-
 	@Override
 	public Map<String, Object> selectByTimeWithType(int blogTypeId, int param, int page) {
 		Map<String, Object> map = new HashMap<>();
@@ -304,6 +274,9 @@ public class BlogServiceImpl implements BlogService {
 		return map;
 	}
 
+	/* 获取博客整体内容
+	 * @see com.isco.Blog.Service.BlogService#selectBlogWhitText(int, int)
+	 */
 	@Override
 	public Map<String, Object> selectBlogWhitText(int userId,int blogId) {
 		Map<String,Object> map = new HashMap<>();

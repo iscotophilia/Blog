@@ -6,8 +6,7 @@
 		<id column="id" property="id" jdbcType="INTEGER" />
 		<result column="name" property="name" jdbcType="VARCHAR" />
 		<result column="user_id" property="userId" jdbcType="INTEGER" />
-		<result column="blog_id" property="blogId" jdbcType="INTEGER" />
-		<collection property="blogs" column="blog_id"
+		<collection property="blogs" column="id"
 			ofType="com.isco.Blog.ResultEntity.BlogUserEntity"
 			select="com.isco.Blog.Mapper.BlogMapper.selectByGroup"></collection>
 	</resultMap>
@@ -18,28 +17,39 @@
 	</delete>
 	<insert id="insert" parameterType="com.isco.Blog.POJO.BlogGroup"
 		useGeneratedKeys="true" keyProperty="id">
-		insert into blog_group (name, user_id, blog_id
+		insert into blog_group (name, user_id
 		)
-		values (#{name,jdbcType=VARCHAR}, #{userId,jdbcType=INTEGER},
-		#{blogId,jdbcType=INTEGER}
+		values (#{name,jdbcType=VARCHAR}, #{userId,jdbcType=INTEGER}
 		)
 	</insert>
 	<update id="updateByPrimaryKey"
 		parameterType="com.isco.Blog.POJO.BlogGroup">
 		update blog_group
-		set name = #{name,jdbcType=VARCHAR},
-		user_id = #{userId,jdbcType=INTEGER},
-		blog_id = #{blogId,jdbcType=INTEGER}
+		set name = #{name,jdbcType=VARCHAR}
 		where id = #{id,jdbcType=INTEGER}
 	</update>
 	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
 		parameterType="java.lang.Integer">
-		select id, name, user_id, blog_id
+		select id, name, user_id
 		from blog_group
 		where id = #{id,jdbcType=INTEGER}
 	</select>
 	<select id="selectAll" resultMap="BaseResultMap">
-		select id, name, user_id, blog_id
+		select id, name, user_id
 		from blog_group
 	</select>
+	
+	<select id="selectByName" resultMap="BaseResultMap">
+		select *
+		from blog_group
+		where name = #{name}
+	</select>
+	
+	<select id="selectByUserId" resultMap="BaseResultMap"
+		parameterType="java.lang.Integer">
+		select id, name
+		from blog_group
+		where user_id = #{userId}
+	</select>
+	
 </mapper>

@@ -25,4 +25,11 @@ public interface SaveMapper {
      * @return
      */
     Save selectByUserIdAndBlogId(Save save);
+    
+    /**
+     * 取消收藏
+     * @param save
+     * @return
+     */
+    int deleteByUserIdAndBlogId(Save save);
 }

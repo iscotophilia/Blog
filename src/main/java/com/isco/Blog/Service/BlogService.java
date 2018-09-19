@@ -78,23 +78,6 @@ public interface BlogService {
      */
     Map<String,Object> selectByUserId(int userId,int param,int page);
     
-    
-    /**
-     * 点赞
-     * @param userId
-     * @param blogId
-     * @return
-     */
-    int updateLove(int userId,int blogId);
-    
-    /**
-     * 收藏
-     * @param userId
-     * @param blogId
-     * @return
-     */
-    int updateSave(int userId,int blogId);
-    
     /**
      * 获取被用户点赞的博客列表
      * @param userId

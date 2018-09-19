@@ -22,7 +22,8 @@ public class BlogTypeServiceImpl implements BlogTypeService{
 	//插入博客类型
 	@Override
 	public int insertType(BlogType record) {
-		// TODO Auto-generated method stub
+		if(blogTypeMapper.selectByName(record.getName())!=null)
+			return -1;
 		return blogTypeMapper.insert(record);
 	}
 	//查询博客类型
@@ -40,7 +41,8 @@ public class BlogTypeServiceImpl implements BlogTypeService{
 	//更新博客类型
 	@Override
 	public int updateTypeByPrimaryKey(BlogType record) {
-		// TODO Auto-generated method stub
+		if(blogTypeMapper.selectByPrimaryKey(record.getId())==null)
+			return -1;
 		return blogTypeMapper.updateByPrimaryKey(record);
 	}
 }

@@ -2,8 +2,15 @@ package com.isco.Blog.POJO;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.isco.Blog.ResultEntity.BlogUserEntity;
 
+/**
+ * @author sazhijie
+ * 创建时间 2018/9/19 11:13
+ * 用户的个人博客分组实体
+ */
+@JsonIgnoreProperties(value = {"handler"})
 public class BlogGroup {
     public List<BlogUserEntity> getBlogs() {
 		return blogs;

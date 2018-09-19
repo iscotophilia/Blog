@@ -25,4 +25,11 @@ public interface LoveMapper {
      * @return
      */
     Love selectByUserIdAndBlogId(Love love);
+    
+    /**
+     * 取消赞
+     * @param love
+     * @return
+     */
+    int deleteByUserIdAndBlogId(Love love);
 }

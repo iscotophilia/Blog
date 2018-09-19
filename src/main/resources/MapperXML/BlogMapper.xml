@@ -78,6 +78,20 @@
 		</set>
 		where id = #{id,jdbcType=INTEGER}
 	</update>
+
+	<update id="deleteLoveNumOrCommentNum"
+		parameterType="com.isco.Blog.POJO.Blog">
+		update blog
+		<set>
+			<if test="commentNum!=null and commentNum!=''">
+				comment_num =comment_num-1,
+			</if>
+			<if test="loveNum!=null and loveNum!=''">
+				love_num = love_num-1,
+			</if>
+		</set>
+		where id = #{id,jdbcType=INTEGER}
+	</update>
 	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
 		parameterType="java.lang.Integer">
 		select id, title, user_id, time, comment_num, love_num,
@@ -122,14 +136,12 @@
 		order by time desc limit
 		#{param},#{page}
 	</select>
-	
+
 	<select id="selectByGroup" resultMap="ListResultMap">
 		select
 		blog.*,user.name,user.sign,user.img,blog_type.name as type
-		from
-		user,blog left join blog_type on blog.blog_type_id=blog_type.id
-		where
-		blog.id=#{id} and blog.user_id=user.id
+		from user,blog left join blog_type on blog.blog_type_id=blog_type.id
+		where blog_group_id=#{id} and blog.user_id=user.id
 		order by time desc
 	</select>
 
@@ -195,7 +207,8 @@
 		select
 		b.*,u.name,u.sign,u.img,blog_type.name as type
 		from love l,user u,
-		blog b left join blog_type on b.blog_type_id=blog_type.id
+		blog
+		b left join blog_type on b.blog_type_id=blog_type.id
 		where
 		l.user_id=#{userId} and u.id=b.user_id
 		and
@@ -263,6 +276,13 @@
 		from save
 		where
 		user_id=#{userId}
+	</select>
+
+	<!-- 查看用户的被点赞数 -->
+	<select id="selectLoveNumByUserId"
+		resultType="java.lang.Integer">
+		select sum(love_num) from blog
+		where user_id=#{userId}
 	</select>
 
 </mapper>

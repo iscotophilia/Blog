@@ -3,14 +3,10 @@ package com.isco.Blog.Controller;
 import java.io.File;
 import java.io.IOException;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.io.FileUtils;
-import org.aspectj.lang.annotation.RequiredTypes;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Required;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -18,9 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.isco.Blog.Mapper.BlogMapper;
 import com.isco.Blog.POJO.Blog;
-import com.isco.Blog.ResultEntity.BlogUserEntity;
 import com.isco.Blog.Service.BlogService;
 
 /**
@@ -86,7 +80,7 @@ public class BlogController {
 	 * @return
 	 * 返回博客信息和用户信息
 	 */
-	@RequestMapping(path="getBlogWithTime",method=RequestMethod.GET)
+	@RequestMapping(path="/getBlogWithTime",method=RequestMethod.GET)
 	public Map<String, Object> getBlogWithTime(int param,int page){
 		return blogService.selectByTime(param, page);
 	}
@@ -97,7 +91,7 @@ public class BlogController {
 	 * @param param
 	 * @return
 	 */
-	@RequestMapping(path="getBlogWithLove",method=RequestMethod.GET)
+	@RequestMapping(path="/getBlogWithLove",method=RequestMethod.GET)
 	public Map<String,Object> getBlogWithLove(int param,int page){
 		return blogService.selectByLove(param,page);
 	}
@@ -127,36 +121,13 @@ public class BlogController {
 	}
 	
 	/**
-	 * 点赞
-	 * @param userId
-	 * @param blogId
-	 * @return 1
-	 */
-	@RequestMapping(path="/loveBlog",method=RequestMethod.GET)
-	public int loveBlog(int userId,int blogId) {
-		return blogService.updateLove(userId, blogId);
-	}
-	
-	/**
-	 * 收藏
-	 * @param userId
-	 * @param blogId
-	 * @return 1
-	 */
-	@RequestMapping(path="/saveBlog",method=RequestMethod.GET)
-	public int saveBlog(int userId,int blogId) {
-		return blogService.updateSave(userId, blogId);
-	}
-	
-	
-	/**
 	 * 获取用户点赞的博客
 	 * @param userId
 	 * @param param
 	 * @param page
 	 * @return
 	 */
-	@RequestMapping(path="getLoveBlog",method=RequestMethod.GET)
+	@RequestMapping(path="/getLoveBlog",method=RequestMethod.GET)
 	public Map<String,Object> getLoveBlog(int userId,int param,int page) {
 		return blogService.selectByUserIdAndLove(userId, param, page);
 	}
@@ -170,7 +141,7 @@ public class BlogController {
 	 * @param page
 	 * @return
 	 */
-	@RequestMapping(path="getCommentBlog",method=RequestMethod.GET)
+	@RequestMapping(path="/getCommentBlog",method=RequestMethod.GET)
 	public Map<String,Object> getCommentBlog(int userId,int param,int page) {
 		return blogService.selectByUserIdAndComment(userId, param, page);
 	}
@@ -183,7 +154,7 @@ public class BlogController {
 	 * @param page
 	 * @return
 	 */
-	@RequestMapping(path="getSaveBlog",method=RequestMethod.GET)
+	@RequestMapping(path="/getSaveBlog",method=RequestMethod.GET)
 	public Map<String,Object> getSaveBlog(int userId,int param,int page) {
 		return blogService.selectByUserIdAndSave(userId, param, page);
 	}
@@ -195,7 +166,7 @@ public class BlogController {
 	 * @param page
 	 * @return
 	 */
-	@RequestMapping(path="getTypeBlog",method=RequestMethod.GET)
+	@RequestMapping(path="/getTypeBlog",method=RequestMethod.GET)
 	public Map<String,Object> getTypeBlog(int blogTypeId,int param,int page){
 		return blogService.selectByTimeWithType(blogTypeId, param, page);
 	}

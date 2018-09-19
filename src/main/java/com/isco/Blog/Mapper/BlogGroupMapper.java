@@ -13,4 +13,8 @@ public interface BlogGroupMapper {
     List<BlogGroup> selectAll();
 
     int updateByPrimaryKey(BlogGroup record);
+    
+    BlogGroup selectByName(String name);
+    
+    List<BlogGroup> selectByUserId(int userId);
 }

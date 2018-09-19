@@ -38,4 +38,10 @@
 		select id from love
 		where user_id=#{userId} and blog_id=#{blogId}
 	</select>
+	
+	<delete id="deleteByUserIdAndBlogId"
+		parameterType="java.lang.Integer">
+		delete from love
+		where user_id = #{userId} and blog_id=#{blogId}
+	</delete>
 </mapper>

@@ -64,7 +64,13 @@
 		select name
 		from
 		blog_type
-		where id = #{id,jdbcType=INTEGER}
+		where id =
+		#{id,jdbcType=INTEGER}
+	</select>
+
+	<select id="selectByName" resultMap="BaseResultMap">
+		select * from blog_type
+		where name=#{name}
 	</select>
 
 	<select id="selectAll" resultMap="BaseResultMap">

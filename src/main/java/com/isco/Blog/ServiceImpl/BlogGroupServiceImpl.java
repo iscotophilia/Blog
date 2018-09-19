@@ -10,37 +10,46 @@ import com.isco.Blog.POJO.BlogGroup;
 import com.isco.Blog.Service.BlogGroupService;
 @Service
 public class BlogGroupServiceImpl implements BlogGroupService {
-	
+
 	@Autowired
-	BlogGroupMapper BlogGroupMapper;
-
+	private BlogGroupMapper blogGroupMapper;
+	//删除博客组
 	@Override
-	public int deleteByPrimaryKey(Integer id) {
+	public int deleteGroupByPrimaryKey(Integer id) {
 		// TODO Auto-generated method stub
-		return 0;
+		if(blogGroupMapper.selectByPrimaryKey(id)==null)
+			return -1;
+		return blogGroupMapper.deleteByPrimaryKey(id);
 	}
-
+	//插入博客组
 	@Override
-	public int insert(BlogGroup record) {
+	public int insertGroup(BlogGroup record) {
+		if(blogGroupMapper.selectByName(record.getName())!=null)
+			return -1;
+		return blogGroupMapper.insert(record);
+	}
+	//查询博客组
+	@Override
+	public BlogGroup selectGroupByPrimaryKey(Integer id) {
 		// TODO Auto-generated method stub
-		return 0;
+		return blogGroupMapper.selectByPrimaryKey(id);
 	}
-
+	
+	//更新所有组
 	@Override
-	public BlogGroup selectByPrimaryKey(Integer id) {
+	public int updateGroupByPrimaryKey(BlogGroup record) {
 		// TODO Auto-generated method stub
-		return null;
+		return blogGroupMapper.updateByPrimaryKey(record);
 	}
-
+	
+	/**
+	 * 查询用户的分组以及用户的分组中的博客
+	 * @param userId
+	 * @return
+	 */
 	@Override
-	public List<BlogGroup> selectAll() {
-		return BlogGroupMapper.selectAll();
-	}
-
-	@Override
-	public int updateByPrimaryKey(BlogGroup record) {
+	public List<BlogGroup> selectByUserId(int userId) {
 		// TODO Auto-generated method stub
-		return 0;
+		return blogGroupMapper.selectByUserId(userId);
 	}
-
 }
