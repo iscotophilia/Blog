@@ -34,7 +34,9 @@ public class UserController {
     IUserService userServise;
 	
 	@RequestMapping(path="/getUserInfo",method=RequestMethod.GET)
-	public Map<String,Object> getUserInfo(int id){
+	public Map<String,Object> getUserInfo(Integer id){
+		if(id==null)
+			return null;
 		return userServise.getUserInfo(id);
 	}
 	
@@ -68,8 +70,7 @@ public class UserController {
 	
 	//发送短信
 	@RequestMapping(path="/sendMessage",method=RequestMethod.GET)
-	public Map<String,Object> sendMsg(String number) {
-		System.out.println(number);
+	public Map<String,Object> sendMsg(@RequestParam String number) {
 		Map<String, Object> map = new HashMap<>();
 		boolean b=false;
 		String s =getRandom();
@@ -193,7 +194,12 @@ public class UserController {
 	 * 返回用户列表
 	 */
 	@RequestMapping(path="/getFollow",method=RequestMethod.GET)
-	public Map<String,Object> getFollow(int userId,Integer param,int page){
+	public Map<String,Object> getFollow(Integer userId,Integer param,Integer page){
+		if(userId==null||param==null||page==null) {
+			Map<String, Object> map = new HashMap<>();
+			map.put("result", false);
+			return map;
+		}
 		return userServise.selectUserByFollow(userId, param,page);
 	}
 

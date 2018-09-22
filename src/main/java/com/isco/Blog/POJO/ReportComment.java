@@ -5,6 +5,8 @@ public class ReportComment {
 
     private Integer commentId;
 
+    private Integer num;
+
     public Integer getId() {
         return id;
     }
@@ -19,5 +21,13 @@ public class ReportComment {
 
     public void setCommentId(Integer commentId) {
         this.commentId = commentId;
+    }
+
+    public Integer getNum() {
+        return num;
+    }
+
+    public void setNum(Integer num) {
+        this.num = num;
     }
 }

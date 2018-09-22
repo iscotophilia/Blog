@@ -2,26 +2,31 @@ package com.isco.Blog.Mapper;
 
 import com.isco.Blog.POJO.Comment;
 import java.util.List;
+import java.util.Map;
 
+import org.apache.ibatis.annotations.Param;
+
+/**
+ * @author sazhijie
+ * 创建时间 2018/9/20 16:34
+ * 评论Mapper
+ */
 public interface CommentMapper {
 	//删除评论
     int deleteByPrimaryKey(Integer id);
     //插入评论
     int insert(Comment record);
-    //回复评论
-    int append(Comment record);
     //查询评论
     Comment selectByPrimaryKey(Integer id);
     //查询所有评论
-    List<Comment> selectAll();
+    List<Object> selectAll(int start);
     //查询所有单个用户评论
-    List<Comment> selectAllByUserID(int userID);
+    List<Object> selectAllByUserID(@Param("userID")int userID,@Param("start")int start);
     //查询所有单个博客评论
-    List<Comment> selectAllByBlogID(int blogID,int start,int size);
-    //查询最高点赞
-    List<Comment> selectAllByLove(int blogID);
+    List<Object> selectAllByBlogID(@Param("blogID")int blogID,@Param("start")int start);
+
     //查询评论下所有回复
-    List<Comment> selectAllByParentID(int parentID,int start,int size);
+    List<Object> selectAllByParentID(@Param("parentID")int parentID,@Param("start")int start);
     //更新评论
     int updateByPrimaryKey(Comment record);
 }

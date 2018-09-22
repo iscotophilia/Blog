@@ -27,7 +27,7 @@ public interface BlogMapper {
      * @return int
      * 返回状态值，返回1为成功，其他失败
      */
-    int deleteByPrimaryKey(Integer id);
+    Integer deleteByPrimaryKey(Integer id);
 
     
     /**
@@ -37,7 +37,7 @@ public interface BlogMapper {
      * 返回状态值
      * 返回1为成功，其他失败
      */
-    int insert(Blog record);
+    Integer insert(Blog record);
     
     /**
      * 根据主键查询
@@ -60,7 +60,7 @@ public interface BlogMapper {
      * @return int
      * 返回状态值，1为成功，其他失败
      */
-    int updateByPrimaryKey(Blog record);
+    Integer updateByPrimaryKey(Blog record);
     
     
     /**
@@ -95,9 +95,9 @@ public interface BlogMapper {
     /**查询总条数
      * @return
      */
-    int selectCount();
-    int selectByFollowIdCount(int userId);
-    int selectByUserIdCount(int userId);
+    Integer selectCount();
+    Integer selectByFollowIdCount(int userId);
+    Integer selectByUserIdCount(int userId);
     
     /**
      * 查询某个用户的博客
@@ -111,13 +111,13 @@ public interface BlogMapper {
     List<BlogUserEntity> selectByUserId(@Param("userId")int userId,@Param("param") int param,@Param("page")int page);
     
     List<BlogUserEntity> selectByUserIdAndLove(@Param("userId")int userId,@Param("param") int param,@Param("page")int page);
-    int selectByUserIdAndLoveCount(int userId);
+    Integer selectByUserIdAndLoveCount(int userId);
     
     List<BlogUserEntity> selectByUserIdAndComment(@Param("userId")int userId,@Param("param") int param,@Param("page")int page);
-    int selectByUserIdAndCommentCount(int userId);
+    Integer selectByUserIdAndCommentCount(int userId);
     
     List<BlogUserEntity> selectByUserIdAndSave(@Param("userId")int userId,@Param("param") int param,@Param("page")int page);
-    int selectByUserIdAndSaveCount(int userId);
+    Integer selectByUserIdAndSaveCount(int userId);
     
     
     /**
@@ -128,7 +128,7 @@ public interface BlogMapper {
      * @return
      */
     List<BlogUserEntity> selectByTimeWithType(@Param("blogTypeId")int blogTypeId,@Param("param")int param,@Param("page")int page);
-    int selectByTimeWithTypeCount(int blogTypeId);
+    Integer selectByTimeWithTypeCount(int blogTypeId);
     
     List<BlogUserEntity> selectByGroup(int id);
     
@@ -137,8 +137,16 @@ public interface BlogMapper {
      * @param blog
      * @return
      */
-    int deleteLoveNumOrCommentNum(Blog blog);
+    Integer deleteLoveNumOrCommentNum(Blog blog);
     
-    int selectLoveNumByUserId(int userId);
+    /**
+     * 查看用户的被点赞数
+     * @param userId
+     * @return
+     */
+    Integer selectLoveNumByUserId(int userId);
+    
+    List<BlogUserEntity> selectByLike(@Param("title")String title,@Param("param") int param,@Param("page")int page);
+    Integer selectByLikeCount(String title);
     
 }

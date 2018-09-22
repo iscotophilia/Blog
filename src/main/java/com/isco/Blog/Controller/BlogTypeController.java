@@ -39,24 +39,16 @@ public class BlogTypeController {
 
 	// 删除博客类型
 	@RequestMapping(path = "/delBlogType", method = RequestMethod.DELETE)
-	public int delBlogType(int id) {
+	public int delBlogType(Integer id) {
+		if(id==null)
+			return -1;
 		return blogTypeService.deleteTypeByPrimaryKey(id);
 	}
 
 	// 列出所有博客类型
 	@RequestMapping(path = "/listBlogType", method = RequestMethod.GET)
-	public Map<String, Object> ListBlogType() {
-		boolean b = false;
-		Map<String, Object> map = new HashMap<>();
-		List<BlogType> bTypes = blogTypeService.selectAllType();
-
-		b = true;
-		map.put("result", b);
-		map.put("size", bTypes.size());
-		for (int i = 0; i < bTypes.size(); i++) {
-			map.put("bType" + i, bTypes.get(i));
-		}
-		return map;
+	public List<BlogType> ListBlogType() {
+		return blogTypeService.selectAllType();
 	}
 
 }

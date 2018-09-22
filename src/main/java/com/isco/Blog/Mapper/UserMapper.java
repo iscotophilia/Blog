@@ -13,10 +13,10 @@ import org.apache.ibatis.annotations.Param;
  */
 public interface UserMapper {
 	// 通过主键删除
-	int deleteByPrimaryKey(Integer id);
+	Integer deleteByPrimaryKey(Integer id);
 
 	// 插入用户
-	int insert(User record);
+	Integer insert(User record);
 
 	// 主键查询用户
 	User selectByPrimaryKey(Integer id);
@@ -25,7 +25,7 @@ public interface UserMapper {
 	List<User> selectAll();
 
 	// 更具主键更新
-	int updateByPrimaryKey(User record);
+	Integer updateByPrimaryKey(User record);
 
 	// 根据手机号和密码查询
 	User selectByNumberAndPwd(User user);
@@ -39,7 +39,7 @@ public interface UserMapper {
 	// 微博登录验证
 	User selectByWBId(String wbId);
 
-	int updateByNumber(User user);
+	Integer updateByNumber(User user);
 	
 	/**
 	 * 查询用户关注的人
@@ -49,9 +49,9 @@ public interface UserMapper {
 	 * 返回用户关注列表
 	 */
 	List<User> selectUserByFollow(@Param("userId")int userId,@Param("param")int param,@Param("page")int page);
-	int selectUserByFollowCount(int userId);
+	Integer selectUserByFollowCount(int userId);
 	//查看有多少人关注了该用户
-	int selectUserByWasFollowedCount(int followId);
+	Integer selectUserByWasFollowedCount(int followId);
 	
 	List<Object> selectTopUser();
 }

@@ -2,6 +2,9 @@ package com.isco.Blog.ServiceImpl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.isco.Blog.Mapper.BlogMapper;
 import com.isco.Blog.Mapper.LoveMapper;
@@ -17,6 +20,7 @@ import com.isco.Blog.Service.LoveService;
  *
  */
 @Service
+@Transactional(propagation = Propagation.REQUIRES_NEW,isolation=Isolation.REPEATABLE_READ)
 public class LoveServiceImpl implements LoveService {
 	
 	@Autowired

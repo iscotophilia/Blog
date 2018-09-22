@@ -57,5 +57,18 @@ public class FollowController {
 		}
 		return followService.deleteByUserIdAndFollowId(follow);
 	}
+	
+	@RequestMapping(path="isFollow",method=RequestMethod.GET)
+	public boolean isFollow(Integer userId,Integer followId) {
+		if(userId==null || followId==null) {
+			return false;
+		}
+		Follow f= new Follow();
+		f.setUserId(userId);
+		f.setFollowId(followId);
+		if(followService.selectByUserIdAndFollowId(f)!=null)
+			return true;
+		return false;
+	}
 
 }

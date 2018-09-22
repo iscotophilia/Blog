@@ -3,6 +3,7 @@ package com.isco.Blog.Controller;
 import java.io.File;
 import java.io.IOException;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.commons.io.FileUtils;
@@ -20,6 +21,8 @@ import com.isco.Blog.Service.BlogService;
 /**
  * 
  * @author 张硕
+ * 创建时间 2018/9/21 16:35
+ * 博客Controller
  *
  */
 @RestController
@@ -49,12 +52,14 @@ public class BlogController {
 		if(file!=null) {
 			String name = file.getOriginalFilename();
 			String b = name.substring(name.lastIndexOf(".") + 1);
-			path = "/var/www/html/blogimg/"+date.toString()+userId+"."+b;
+			String d = date.toString();
+			path = "/var/www/html/blogimg/"+d+userId+"."+b;
 			try {
 				FileUtils.writeByteArrayToFile(new File(path), file.getBytes());
 			} catch (IOException e) {
 				return -1;
 			}
+			path="http://120.79.184.27:81/blogimg/"+d+userId+"."+b;
 		}
 		return blogService.insertBlog(title, userId, type, group, text, path,date);
 	}
@@ -62,7 +67,9 @@ public class BlogController {
 
 	//删除博客项目
 	@RequestMapping(path="/delBlog",method=RequestMethod.DELETE)
-	public int DelBlog(int id) {
+	public int DelBlog(Integer id) {
+		if(id==null)
+			return -1;
 		if(blogService.selectByPrimaryKey(id)!=null)
 			return blogService.deleteByPrimaryKey(id);
 		return -1;
@@ -81,7 +88,12 @@ public class BlogController {
 	 * 返回博客信息和用户信息
 	 */
 	@RequestMapping(path="/getBlogWithTime",method=RequestMethod.GET)
-	public Map<String, Object> getBlogWithTime(int param,int page){
+	public Map<String, Object> getBlogWithTime(Integer param,Integer page){
+		if(param==null || page==null) {
+			Map<String,Object> map = new HashMap<>();
+			map.put("result", false);
+			return map;
+		}
 		return blogService.selectByTime(param, page);
 	}
 	
@@ -92,7 +104,12 @@ public class BlogController {
 	 * @return
 	 */
 	@RequestMapping(path="/getBlogWithLove",method=RequestMethod.GET)
-	public Map<String,Object> getBlogWithLove(int param,int page){
+	public Map<String,Object> getBlogWithLove(Integer param,Integer page){
+		if(param==null || page==null) {
+			Map<String,Object> map = new HashMap<>();
+			map.put("result", false);
+			return map;
+		}
 		return blogService.selectByLove(param,page);
 	}
 	
@@ -104,7 +121,12 @@ public class BlogController {
 	 * @return
 	 */
 	@RequestMapping(path="/getFollowBlog",method=RequestMethod.GET)
-	public Map<String,Object> getFollowBlog(int userId,int param,int page){
+	public Map<String,Object> getFollowBlog(Integer userId,Integer param,Integer page){
+		if(param==null || page==null || userId==null) {
+			Map<String,Object> map = new HashMap<>();
+			map.put("result", false);
+			return map;
+		}
 		return blogService.selectByFollowId(userId, param, page);
 	}
 	
@@ -116,7 +138,12 @@ public class BlogController {
 	 * @return
 	 */
 	@RequestMapping(path="/getUserBlog",method=RequestMethod.GET)
-	public Map<String,Object> getUserBlog(int userId,int param,int page){
+	public Map<String,Object> getUserBlog(Integer userId,Integer param,Integer page){
+		if(param==null || page==null || userId==null) {
+			Map<String,Object> map = new HashMap<>();
+			map.put("result", false);
+			return map;
+		}
 		return blogService.selectByUserId(userId, param, page);
 	}
 	
@@ -128,7 +155,12 @@ public class BlogController {
 	 * @return
 	 */
 	@RequestMapping(path="/getLoveBlog",method=RequestMethod.GET)
-	public Map<String,Object> getLoveBlog(int userId,int param,int page) {
+	public Map<String,Object> getLoveBlog(Integer userId,Integer param,Integer page) {
+		if(param==null || page==null || userId==null) {
+			Map<String,Object> map = new HashMap<>();
+			map.put("result", false);
+			return map;
+		}
 		return blogService.selectByUserIdAndLove(userId, param, page);
 	}
 	
@@ -142,7 +174,12 @@ public class BlogController {
 	 * @return
 	 */
 	@RequestMapping(path="/getCommentBlog",method=RequestMethod.GET)
-	public Map<String,Object> getCommentBlog(int userId,int param,int page) {
+	public Map<String,Object> getCommentBlog(Integer userId,Integer param,Integer page) {
+		if(param==null || page==null || userId==null) {
+			Map<String,Object> map = new HashMap<>();
+			map.put("result", false);
+			return map;
+		}
 		return blogService.selectByUserIdAndComment(userId, param, page);
 	}
 	
@@ -155,7 +192,12 @@ public class BlogController {
 	 * @return
 	 */
 	@RequestMapping(path="/getSaveBlog",method=RequestMethod.GET)
-	public Map<String,Object> getSaveBlog(int userId,int param,int page) {
+	public Map<String,Object> getSaveBlog(Integer userId,Integer param,Integer page) {
+		if(param==null || page==null || userId==null) {
+			Map<String,Object> map = new HashMap<>();
+			map.put("result", false);
+			return map;
+		}
 		return blogService.selectByUserIdAndSave(userId, param, page);
 	}
 	
@@ -167,7 +209,12 @@ public class BlogController {
 	 * @return
 	 */
 	@RequestMapping(path="/getTypeBlog",method=RequestMethod.GET)
-	public Map<String,Object> getTypeBlog(int blogTypeId,int param,int page){
+	public Map<String,Object> getTypeBlog(Integer blogTypeId,Integer param,Integer page){
+		if(param==null || page==null || blogTypeId==null) {
+			Map<String,Object> map = new HashMap<>();
+			map.put("result", false);
+			return map;
+		}
 		return blogService.selectByTimeWithType(blogTypeId, param, page);
 	}
 	
@@ -178,7 +225,22 @@ public class BlogController {
 	 * @return
 	 */
 	@RequestMapping(path="/getBlog",method=RequestMethod.GET)
-	public Map<String,Object> getBlog(int userId,int blogId){
+	public Map<String,Object> getBlog(Integer userId,Integer blogId){
+		if(blogId==null || userId==null) {
+			Map<String,Object> map = new HashMap<>();
+			map.put("result", false);
+			return map;
+		}
 		return blogService.selectBlogWhitText(userId, blogId);
+	}
+	
+	@RequestMapping(path="/searchBlog",method=RequestMethod.GET)
+	public Map<String,Object> searchBlog(String title,Integer param,Integer page){
+		if(param==null || page==null) {
+			Map<String,Object> map = new HashMap<>();
+			map.put("result", false);
+			return map;
+		}
+		return blogService.selectByLike(title, param, page);
 	}
 }

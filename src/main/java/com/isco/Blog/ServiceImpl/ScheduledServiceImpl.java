@@ -1,24 +1,22 @@
 package com.isco.Blog.ServiceImpl;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.isco.Blog.Mapper.BlogMapper;
-import com.isco.Blog.Mapper.FollowMapper;
-import com.isco.Blog.Mapper.SaveMapper;
 import com.isco.Blog.Mapper.UserMapper;
 import com.isco.Blog.ResultEntity.BlogUserEntity;
 import com.isco.Blog.Service.ScheduledService;
 
 @Service
+@Transactional(propagation = Propagation.REQUIRES_NEW,isolation=Isolation.REPEATABLE_READ)
 public class ScheduledServiceImpl implements ScheduledService {
 	
 	@Autowired

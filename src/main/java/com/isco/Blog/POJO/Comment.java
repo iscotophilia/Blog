@@ -2,6 +2,11 @@ package com.isco.Blog.POJO;
 
 import java.util.Date;
 
+/**
+ * @author sazhijie
+ * 创建时间 2018/9/20 16:22
+ * 评论类实体
+ */
 public class Comment {
     private Integer id;
 

@@ -19,7 +19,9 @@ public class SaveController {
 	 * @return 1
 	 */
 	@RequestMapping(path="/saveBlog",method=RequestMethod.GET)
-	public int saveBlog(int userId,int blogId) {
+	public int saveBlog(Integer userId,Integer blogId) {
+		if(userId==null || blogId==null)
+			return -1;
 		return saveService.updateSave(userId, blogId);
 	}
 	
@@ -30,7 +32,9 @@ public class SaveController {
 	 * @return
 	 */
 	@RequestMapping(path="/cancelSaveBlog",method=RequestMethod.GET)
-	public int cancelSaveBlog(int userId,int blogId) {
+	public int cancelSaveBlog(Integer userId,Integer blogId) {
+		if(userId==null || blogId==null)
+			return -1;
 		return saveService.cancelSave(userId, blogId);
 	}
 

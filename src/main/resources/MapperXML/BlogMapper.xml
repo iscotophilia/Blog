@@ -140,8 +140,10 @@
 	<select id="selectByGroup" resultMap="ListResultMap">
 		select
 		blog.*,user.name,user.sign,user.img,blog_type.name as type
-		from user,blog left join blog_type on blog.blog_type_id=blog_type.id
-		where blog_group_id=#{id} and blog.user_id=user.id
+		from
+		user,blog left join blog_type on blog.blog_type_id=blog_type.id
+		where
+		blog_group_id=#{id} and blog.user_id=user.id
 		order by time desc
 	</select>
 
@@ -283,6 +285,21 @@
 		resultType="java.lang.Integer">
 		select sum(love_num) from blog
 		where user_id=#{userId}
+	</select>
+
+	<select id="selectByLike" resultMap="ListResultMap">
+		select
+		blog.*,user.name,user.sign,user.img,blog_type.name as type
+		from
+		user,blog left join blog_type on blog.blog_type_id=blog_type.id where
+		blog.user_id=user.id and blog.title like CONCAT('%',#{title},'%')
+		order by love_num desc
+		limit
+		#{param},#{page}
+	</select>
+
+	<select id="selectByLikeCount" resultType="java.lang.Integer">
+		select count(*) from blog where title like CONCAT('%',#{title},'%')
 	</select>
 
 </mapper>

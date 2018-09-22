@@ -4,11 +4,15 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.isco.Blog.Mapper.BlogTypeMapper;
 import com.isco.Blog.POJO.BlogType;
 import com.isco.Blog.Service.BlogTypeService;
 @Service
+@Transactional(propagation = Propagation.REQUIRES_NEW,isolation=Isolation.REPEATABLE_READ)
 public class BlogTypeServiceImpl implements BlogTypeService{
 	
 	@Autowired

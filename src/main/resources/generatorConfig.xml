@@ -78,7 +78,13 @@
 				value=""/> -->
 		</javaClientGenerator>		
 		
-		<table tableName="test">
+		<table tableName="report_blog">
+			<!-- 参考 javaModelGenerator 的 constructorBased属性 -->
+			<property name="constructorBased" value="false" />
+			<generatedKey column="id" sqlStatement="JDBC" />
+		</table>
+		
+		<table tableName="report_comment">
 			<!-- 参考 javaModelGenerator 的 constructorBased属性 -->
 			<property name="constructorBased" value="false" />
 			<generatedKey column="id" sqlStatement="JDBC" />

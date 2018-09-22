@@ -159,6 +159,7 @@ public class UserServiceImpl implements IUserService {
 		map.put("wasFollowedNum", userMapper.selectUserByWasFollowedCount(id));
 		map.put("blogNum", blogMapper.selectByUserIdCount(id));
 		map.put("loveNum", blogMapper.selectLoveNumByUserId(id));
+		map.put("result", true);
 		return map;
 	}
 

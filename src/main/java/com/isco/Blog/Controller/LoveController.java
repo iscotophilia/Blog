@@ -20,7 +20,9 @@ public class LoveController {
 	 * @return 1
 	 */
 	@RequestMapping(path="/loveBlog",method=RequestMethod.GET)
-	public int loveBlog(int userId,int blogId) {
+	public int loveBlog(Integer userId,Integer blogId) {
+		if(userId==null || blogId==null)
+			return -1;
 		return loveService.updateLove(userId, blogId);
 	}
 	
@@ -31,7 +33,9 @@ public class LoveController {
 	 * @return 1
 	 */
 	@RequestMapping(path="/cancelLoveBlog",method=RequestMethod.GET)
-	public int cancelLoveBlog(int userId,int blogId) {
+	public int cancelLoveBlog(Integer userId,Integer blogId) {
+		if(userId==null || blogId==null)
+			return -1;
 		return loveService.cancelLove(userId, blogId);
 	}
 

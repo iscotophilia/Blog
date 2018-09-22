@@ -1,5 +1,6 @@
 package com.isco.Blog.Controller;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -35,150 +36,56 @@ public class CommentController {
 	CommentService commentService;
 	
 	//添加新的评论
-	@RequestMapping(path="/AddBlogComment",method=RequestMethod.POST)
-	public Map<String, Object> addComment(@RequestBody Comment comment) {
-		boolean b = false;
-		Map<String, Object> map = new HashMap<>();
-		if(comment!=null) {
-			if(commentService.insert(comment)==1)
-			{
-				b=true;
-			}
-			map.put("result", b);
-		}else {
-			map.put("result", b);
-		}
-		return map;
+	@RequestMapping(path="/addBlogComment",method=RequestMethod.POST)
+	public int addComment(@RequestBody Comment comment) {
+		if(comment.getBlogId()==null ||comment.getUserId()==null || comment.getComment()==null)
+			return -1;
+		comment.setTime(new Date());
+		return commentService.insert(comment);
 	}
 	//更改评论
-	@RequestMapping(path="/UpdateComment",method=RequestMethod.POST)
-	public Map<String, Object> updateComment(@RequestBody Comment comment) {
-		boolean b = false;
-		Map<String, Object> map = new HashMap<>();
-		if(comment!=null) {
-			if(commentService.updateByPrimaryKey(comment)==1)
-			{
-				b=true;
-			}
-			map.put("result", b);
-		}else {
-			map.put("result", b);
-		}
-		return map;
+	@RequestMapping(path="/updateComment",method=RequestMethod.POST)
+	public int updateComment(@RequestBody Comment comment) {
+		if(comment.getId()==null || comment.getComment()==null)
+			return -1;
+		return commentService.updateByPrimaryKey(comment);
 	}
 	//删除评论
-	@RequestMapping(path="/DelBlogComment",method=RequestMethod.DELETE)
-	public Map<String, Object> delBlogComment(@RequestBody Map<String,Object> params) {
-		boolean b = false;
-		Map<String, Object> map = new HashMap<>();
-		if(params.get("comid")!=null) {
-			if(commentService.deleteByPrimaryKey(Integer.valueOf(params.get("comid").toString()))==1)
-			{
-				b=true;
-			}
-			map.put("result", b);
-		}else {
-			map.put("result", b);
-		}
-		return map;
+	@RequestMapping(path="/delBlogComment",method=RequestMethod.DELETE)
+	public int delBlogComment(Integer id) {
+		if(id==null)
+			return -1;
+		return commentService.deleteByPrimaryKey(id);
 	}
-	//列出所有评论(传输参数待定)
-	@RequestMapping(path="/ListAllComment",method=RequestMethod.GET)
-	public Map<String, Object> ListComment() {
-		boolean b = false;
-		Map<String, Object> map = new HashMap<>();
-		List<Comment> comments=commentService.selectAll();
-		b=true;
-		map.put("result", b);
-		map.put("size", comments.size());
-		for(int i=0;i<comments.size();i++)
-		{
-			map.put("Comment"+i, comments.get(i));			
-		}
-		return map;
+	//列出所有评论
+	@RequestMapping(path="/listAllComment",method=RequestMethod.GET)
+	public List<Object> ListComment(Integer start) {
+		if(start==null)
+			return null;
+		return commentService.selectAll(start);
 	}
 	//列出博客内评论
-	@RequestMapping(path="/ListBlogComment",method=RequestMethod.GET)
-	public Map<String, Object> ListBlogComment(@RequestBody Map<String,Object> params) {
-		boolean b = false;
-		Map<String, Object> map = new HashMap<>();
-		int start=Integer.valueOf(params.get("start").toString());
-		int size=Integer.valueOf(params.get("size").toString());
-		if(params.get("blogid")!=null)
-		{
-			List<Comment> comments=commentService.selectAllByBlogID(Integer.valueOf(params.get("blogid").toString()),start,size);
-			b=true;
-			map.put("result", b);
-			map.put("size", comments.size());
-			for(int i=0;i<comments.size();i++)
-			{
-				map.put("bComment"+i, comments.get(i));			
-			}
-		}else {
-			map.put("result", b);
-		}
-		return map;
+	@RequestMapping(path="/listBlogComment",method=RequestMethod.GET)
+	public List<Object> ListBlogComment(Integer  blogId,Integer start) {
+		if(blogId==null || start==null)
+			return null;
+		return commentService.selectAllByBlogID(blogId,start);
+
 	}
 	//列出用户所有评论
-	@RequestMapping(path="/ListUserComment",method=RequestMethod.GET)
-	public Map<String, Object> ListUserComment(@RequestBody Map<String,Object> params) {
-		boolean b = false;
-		Map<String, Object> map = new HashMap<>();
-		if(params.get("userid")!=null)
-		{
-			List<Comment> comments=commentService.selectAllByUserID(Integer.valueOf(params.get("userid").toString()));
-			b=true;
-			map.put("result", b);
-			map.put("size", comments.size());
-			for(int i=0;i<comments.size();i++)
-			{
-				map.put("uComment"+i, comments.get(i));			
-			}
-		}else {
-			map.put("result", b);
-		}
-		return map;
-	}
-	//列出最受欢迎4条的评论
-	@RequestMapping(path="/ListLoveComment",method=RequestMethod.GET)
-	public Map<String, Object> ListLoveComment(@RequestBody Map<String,Object> params) {
-		boolean b = false;
-		Map<String, Object> map = new HashMap<>();
-		if(params.get("blogid")!=null)
-		{
-			List<Comment> comments=commentService.selectAllByLove(Integer.valueOf(params.get("blogid").toString()));
-			b=true;
-			map.put("result", b);
-			map.put("size", comments.size());
-			for(int i=0;i<comments.size();i++)
-			{
-				map.put("uComment"+i, comments.get(i));			
-			}
-		}else {
-			map.put("result", b);
-		}
-		return map;
+	@RequestMapping(path="/listUserComment",method=RequestMethod.GET)
+	public List<Object> ListUserComment(Integer userId,Integer start) {
+		if(userId==null || start==null)
+			return null;
+		return commentService.selectAllByUserID(userId,start);
 	}
 
 	//列出评论下回复
-	@RequestMapping(path="/ListSubComment",method=RequestMethod.GET)
-	public Map<String, Object> ListSubComment(@RequestBody Map<String,Object> params) {
-		boolean b = false;
-		Map<String, Object> map = new HashMap<>();
-		if(params.get("comid")!=null)
-		{
-			List<Comment> comments=commentService.selectAllByParentID(Integer.valueOf(params.get("comid").toString()),Integer.valueOf(params.get("start").toString()),Integer.valueOf(params.get("size").toString()));
-			b=true;
-			map.put("result", b);
-			map.put("size", comments.size());
-			for(int i=0;i<comments.size();i++)
-			{
-				map.put("uComment"+i, comments.get(i));			
-			}
-		}else {
-			map.put("result", b);
-		}
-		return map;
+	@RequestMapping(path="/listSubComment",method=RequestMethod.GET)
+	public List<Object> ListSubComment(Integer id,Integer start) {
+		if(id==null || start==null)
+			return null;
+		return commentService.selectAllByParentID(id,start);
 	}
 
 }

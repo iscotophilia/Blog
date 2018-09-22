@@ -4,7 +4,10 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.isco.Blog.POJO.Blog;
+import com.isco.Blog.ResultEntity.BlogUserEntity;
 
 
 /**
@@ -118,4 +121,6 @@ public interface BlogService {
     Map<String,Object> selectByTimeWithType(int blogTypeId,int param,int page);
     
     Map<String,Object> selectBlogWhitText(int userId,int blogId);
+    
+    Map<String,Object> selectByLike(String title,int param,int page);
 }

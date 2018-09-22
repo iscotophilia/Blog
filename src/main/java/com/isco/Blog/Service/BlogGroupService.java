@@ -20,5 +20,17 @@ public interface BlogGroupService {
     //更新博客组
     int updateGroupByPrimaryKey(BlogGroup record);
 	
+    /**
+     * 列出分组和博客
+     * @param userId
+     * @return
+     */
     List<BlogGroup> selectByUserId(int userId);
+    
+    /**
+     * 列出分组
+     * @param userId
+     * @return
+     */
+    List<BlogGroup> selectByUserIdJustList(int userId);
 }

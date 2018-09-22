@@ -15,11 +15,13 @@ import org.springframework.transaction.annotation.Transactional;
 import com.isco.Blog.Mapper.BlogMapper;
 import com.isco.Blog.Mapper.BlogTextMapper;
 import com.isco.Blog.Mapper.BlogTypeMapper;
+import com.isco.Blog.Mapper.FollowMapper;
 import com.isco.Blog.Mapper.LoveMapper;
 import com.isco.Blog.Mapper.SaveMapper;
 import com.isco.Blog.Mapper.UserMapper;
 import com.isco.Blog.POJO.Blog;
 import com.isco.Blog.POJO.BlogText;
+import com.isco.Blog.POJO.Follow;
 import com.isco.Blog.POJO.Love;
 import com.isco.Blog.POJO.Save;
 import com.isco.Blog.Service.BlogService;
@@ -51,6 +53,9 @@ public class BlogServiceImpl implements BlogService {
 	
 	@Autowired
 	private BlogTypeMapper blogTypeMapper;
+	
+	@Autowired
+	private FollowMapper followMapper;
 
 	//删除博客项目和内容
 	//数据库内部有约束，删除博客主体对应内容也会删除
@@ -283,7 +288,7 @@ public class BlogServiceImpl implements BlogService {
 		Blog blog =  blogMapper.selectByPrimaryKey(blogId);
 		map.put("blog", blog);
 		map.put("blog_text", blogTextMapper.selectByBlogId(blogId));
-		map.put("user", userMapper.selectByPrimaryKey(userId));
+		map.put("user", userMapper.selectByPrimaryKey(blog.getUserId()));
 		map.put("type", blogTypeMapper.selectName(blog.getBlogTypeId()));
 		Save save = new Save();
 		save.setUserId(userId);
@@ -297,6 +302,21 @@ public class BlogServiceImpl implements BlogService {
 		map.put("isLove", false);
 		if(loveMapper.selectByUserIdAndBlogId(love)!=null)
 			map.put("isLove", true);
+		return map;
+	}
+
+	@Override
+	public Map<String, Object> selectByLike(String title, int param, int page) {
+		Map<String, Object> map = new HashMap<>();
+		int count =blogMapper.selectByLikeCount(title);
+		int i=CaculateParam(param, page,count);
+		if(i<0) {
+			map.put("result", false);
+			return map;
+		}
+		map.put("result", true);
+		map.put("blog", blogMapper.selectByLike(title, i, page));
+		map.put("page",(int) Math.ceil((double)count/page));
 		return map;
 	}
 

@@ -4,11 +4,16 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.isco.Blog.Mapper.BlogGroupMapper;
+import com.isco.Blog.Mapper.BlogMapper;
 import com.isco.Blog.POJO.BlogGroup;
 import com.isco.Blog.Service.BlogGroupService;
 @Service
+@Transactional(propagation = Propagation.REQUIRES_NEW,isolation=Isolation.REPEATABLE_READ)
 public class BlogGroupServiceImpl implements BlogGroupService {
 
 	@Autowired
@@ -38,7 +43,8 @@ public class BlogGroupServiceImpl implements BlogGroupService {
 	//更新所有组
 	@Override
 	public int updateGroupByPrimaryKey(BlogGroup record) {
-		// TODO Auto-generated method stub
+		if(blogGroupMapper.selectByPrimaryKey(record.getId())==null)
+			return -1;
 		return blogGroupMapper.updateByPrimaryKey(record);
 	}
 	
@@ -51,5 +57,10 @@ public class BlogGroupServiceImpl implements BlogGroupService {
 	public List<BlogGroup> selectByUserId(int userId) {
 		// TODO Auto-generated method stub
 		return blogGroupMapper.selectByUserId(userId);
+	}
+	@Override
+	public List<BlogGroup> selectByUserIdJustList(int userId) {
+		// TODO Auto-generated method stub
+		return blogGroupMapper.selectByUserIdJustList(userId);
 	}
 }

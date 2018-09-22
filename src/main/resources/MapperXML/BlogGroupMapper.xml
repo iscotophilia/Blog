@@ -6,10 +6,18 @@
 		<id column="id" property="id" jdbcType="INTEGER" />
 		<result column="name" property="name" jdbcType="VARCHAR" />
 		<result column="user_id" property="userId" jdbcType="INTEGER" />
+	</resultMap>
+	
+	<resultMap id="BaseBlogResultMap"
+		type="com.isco.Blog.POJO.BlogGroup">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="name" property="name" jdbcType="VARCHAR" />
+		<result column="user_id" property="userId" jdbcType="INTEGER" />
 		<collection property="blogs" column="id"
 			ofType="com.isco.Blog.ResultEntity.BlogUserEntity"
 			select="com.isco.Blog.Mapper.BlogMapper.selectByGroup"></collection>
 	</resultMap>
+	
 	<delete id="deleteByPrimaryKey"
 		parameterType="java.lang.Integer">
 		delete from blog_group
@@ -45,7 +53,14 @@
 		where name = #{name}
 	</select>
 	
-	<select id="selectByUserId" resultMap="BaseResultMap"
+	<select id="selectByUserId" resultMap="BaseBlogResultMap"
+		parameterType="java.lang.Integer">
+		select id, name
+		from blog_group
+		where user_id = #{userId}
+	</select>
+	
+	<select id="selectByUserIdJustList" resultMap="BaseResultMap"
 		parameterType="java.lang.Integer">
 		select id, name
 		from blog_group

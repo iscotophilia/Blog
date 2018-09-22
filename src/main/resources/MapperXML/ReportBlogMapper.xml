@@ -4,27 +4,29 @@
   <resultMap id="BaseResultMap" type="com.isco.Blog.POJO.ReportBlog" >
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="blog_id" property="blogId" jdbcType="INTEGER" />
+    <result column="num" property="num" jdbcType="INTEGER" />
   </resultMap>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from report_blog
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.isco.Blog.POJO.ReportBlog" useGeneratedKeys="true" keyProperty="id" >
-    insert into report_blog (blog_id)
-    values (#{blogId,jdbcType=INTEGER})
+    insert into report_blog (blog_id, num)
+    values (#{blogId,jdbcType=INTEGER}, #{num,jdbcType=INTEGER})
   </insert>
   <update id="updateByPrimaryKey" parameterType="com.isco.Blog.POJO.ReportBlog" >
     update report_blog
-    set blog_id = #{blogId,jdbcType=INTEGER}
+    set blog_id = #{blogId,jdbcType=INTEGER},
+      num = #{num,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-    select id, blog_id
+    select id, blog_id, num
     from report_blog
     where id = #{id,jdbcType=INTEGER}
   </select>
   <select id="selectAll" resultMap="BaseResultMap" >
-    select id, blog_id
-    from report_blog
+    select id, blog_id, num
+    from report_blog order by num desc limit #{start},15
   </select>
 </mapper>

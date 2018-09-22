@@ -4,25 +4,36 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
+import com.isco.Blog.Mapper.BlogMapper;
 import com.isco.Blog.Mapper.CommentMapper;
+import com.isco.Blog.POJO.Blog;
 import com.isco.Blog.POJO.Comment;
 import com.isco.Blog.Service.CommentService;
 @Service
+@Transactional(propagation = Propagation.REQUIRES_NEW,isolation=Isolation.REPEATABLE_READ)
 public class CommentServiceImpl implements CommentService {
 
 	@Autowired
-	CommentMapper commentMapper;
+	private CommentMapper commentMapper;
+	
+	@Autowired
+	private BlogMapper blogMapper;
 	
 	@Override
 	public int deleteByPrimaryKey(Integer id) {
-		// TODO Auto-generated method stub
 		return commentMapper.deleteByPrimaryKey(id);
 	}
 
 	@Override
 	public int insert(Comment record) {
-		// TODO Auto-generated method stub
+		Blog b= new Blog();
+		b.setId(record.getBlogId());
+		b.setCommentNum(1);
+		blogMapper.updateByPrimaryKey(b);
 		return commentMapper.insert(record);
 	}
 
@@ -33,23 +44,29 @@ public class CommentServiceImpl implements CommentService {
 	}
 
 	@Override
-	public List<Comment> selectAll() {
+	public List<Object> selectAll(int start) {
 		// TODO Auto-generated method stub
-		return commentMapper.selectAll();
+		return commentMapper.selectAll(start);
 	}
 
 	@Override
-	public List<Comment> selectAllByUserID(int userID) {
+	public List<Object> selectAllByUserID(int userID,int start) {
 		// TODO Auto-generated method stub
-		return commentMapper.selectAllByUserID(userID);
+		return commentMapper.selectAllByUserID(userID,start);
 	}
 
+	/* 查看博客的第一层评论
+	 * @see com.isco.Blog.Service.CommentService#selectAllByBlogID(int, int)
+	 */
 	@Override
-	public List<Comment> selectAllByBlogID(int blogID, int start,int size) {
+	public List<Object> selectAllByBlogID(int blogID, int start) {
 		// TODO Auto-generated method stub
-		return commentMapper.selectAllByBlogID(blogID, start, size);
+		return commentMapper.selectAllByBlogID(blogID, start);
 	}
 
+	/* 更新评论
+	 * @see com.isco.Blog.Service.CommentService#updateByPrimaryKey(com.isco.Blog.POJO.Comment)
+	 */
 	@Override
 	public int updateByPrimaryKey(Comment record) {
 		// TODO Auto-generated method stub
@@ -57,21 +74,9 @@ public class CommentServiceImpl implements CommentService {
 	}
 
 	@Override
-	public List<Comment> selectAllByLove(int blogID) {
+	public List<Object> selectAllByParentID(int parentID, int start) {
 		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public int append(Comment record) {
-		// TODO Auto-generated method stub
-		return commentMapper.append(record);
-	}
-
-	@Override
-	public List<Comment> selectAllByParentID(int parentID, int start, int size) {
-		// TODO Auto-generated method stub
-		return commentMapper.selectAllByParentID(parentID, start, size);
+		return commentMapper.selectAllByParentID(parentID, start);
 	}
 
 }

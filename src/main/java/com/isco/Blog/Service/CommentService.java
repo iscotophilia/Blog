@@ -14,20 +14,16 @@ public interface CommentService {
     int deleteByPrimaryKey(Integer id);
     //插入评论
     int insert(Comment record);
-    //回复评论
-    int append(Comment record);
     //查询评论
     Comment selectByPrimaryKey(Integer id);
     //查询所有评论
-    List<Comment> selectAll();
+    List<Object> selectAll(int start);
     //查询所有单个用户评论
-    List<Comment> selectAllByUserID(int userID);
+    List<Object> selectAllByUserID(int userID,int start);
     //查询所有单个博客评论
-    List<Comment> selectAllByBlogID(int blogID,int start,int size);
-    //查询博客最高赞评论
-    List<Comment> selectAllByLove(int blogID);
+    List<Object> selectAllByBlogID(int blogID,int start);
     //查询评论下所有回复
-    List<Comment> selectAllByParentID(int parentID,int start,int size);
+    List<Object> selectAllByParentID(int parentID,int start);
     //更新评论
     int updateByPrimaryKey(Comment record);
 }
