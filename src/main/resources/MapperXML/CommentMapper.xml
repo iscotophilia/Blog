@@ -14,7 +14,7 @@
 	</resultMap>
 	
 	<resultMap id="BaseResultMapWhitUser"
-		type="Map">
+		type="com.isco.Blog.ResultEntity.CommentUserEntity">
 		<id column="id" property="id" jdbcType="INTEGER" />
 		<result column="comment" property="comment" jdbcType="VARCHAR" />
 		<result column="user_id" property="userId" jdbcType="INTEGER" />
@@ -81,7 +81,7 @@
 	
 	<!-- 查看当前博客的第一层评论 -->
 	<select id="selectAllByBlogID" resultMap="BaseResultMapWhitUser">
-		select comment.id, comment, user_id, love_num, time,
+		select distinct comment.id, comment, user_id, love_num, time,
 		blog_id,name,sign,img
 		from comment,user
 		where blog_id =
@@ -91,10 +91,10 @@
 	
 	<!-- 查看当前博客的第二层评论 -->
 	<select id="selectAllByParentID" resultMap="BaseResultMapWhitUser">
-		select comment.id, comment, user_id, love_num, time,
+		select distinct comment.id, comment, user_id, love_num, time,
 		blog_id,name,sign,img
 		from comment,user
-		where parent_id = #{parentID} and comment.id &gt; #{start} 
+		where parent_id = #{parentID} and comment.id &gt; #{start} and user_id=user.id
 		limit 10
 	</select>
 </mapper>

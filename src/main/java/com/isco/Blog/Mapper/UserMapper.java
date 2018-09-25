@@ -53,5 +53,8 @@ public interface UserMapper {
 	//查看有多少人关注了该用户
 	Integer selectUserByWasFollowedCount(int followId);
 	
+	/** 查看TOP10用户
+	 * @return
+	 */
 	List<Object> selectTopUser();
 }

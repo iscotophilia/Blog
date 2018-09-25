@@ -202,5 +202,10 @@ public class UserController {
 		}
 		return userServise.selectUserByFollow(userId, param,page);
 	}
+	
+	@RequestMapping(path="/getAllUser",method=RequestMethod.GET)
+	public List<User> getAllUser(){
+		return userServise.selectAll();
+	}
 
 }

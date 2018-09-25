@@ -6,6 +6,11 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
+/**
+ * @author sazhijie
+ * 创建时间 2018/9/24 13:05
+ * 博客实体
+ */
 public class Blog {
 	public Integer getBlogGroupId() {
 		return blogGroupId;

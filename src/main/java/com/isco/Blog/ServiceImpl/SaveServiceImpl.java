@@ -12,6 +12,11 @@ import com.isco.Blog.POJO.Blog;
 import com.isco.Blog.POJO.Save;
 import com.isco.Blog.Service.SaveService;
 
+/**
+ * @author sazhijie
+ * 创建时间 2018/9/24 16:07
+ * 收藏Service
+ */
 @Service
 @Transactional(propagation = Propagation.REQUIRES_NEW,isolation=Isolation.REPEATABLE_READ)
 public class SaveServiceImpl implements SaveService {

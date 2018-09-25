@@ -3,6 +3,7 @@ package com.isco.Blog.Service;
 import java.util.List;
 
 import com.isco.Blog.POJO.Comment;
+import com.isco.Blog.ResultEntity.CommentUserEntity;
 /**
  * 
  * @author 张硕
@@ -17,13 +18,13 @@ public interface CommentService {
     //查询评论
     Comment selectByPrimaryKey(Integer id);
     //查询所有评论
-    List<Object> selectAll(int start);
+    List<CommentUserEntity> selectAll(int start);
     //查询所有单个用户评论
-    List<Object> selectAllByUserID(int userID,int start);
+    List<CommentUserEntity> selectAllByUserID(int userID,int start);
     //查询所有单个博客评论
-    List<Object> selectAllByBlogID(int blogID,int start);
+    List<CommentUserEntity> selectAllByBlogID(int blogID,int start);
     //查询评论下所有回复
-    List<Object> selectAllByParentID(int parentID,int start);
+    List<CommentUserEntity> selectAllByParentID(int parentID,int start);
     //更新评论
     int updateByPrimaryKey(Comment record);
 }

@@ -1,6 +1,8 @@
 package com.isco.Blog.Mapper;
 
 import com.isco.Blog.POJO.Comment;
+import com.isco.Blog.ResultEntity.CommentUserEntity;
+
 import java.util.List;
 import java.util.Map;
 
@@ -19,14 +21,14 @@ public interface CommentMapper {
     //查询评论
     Comment selectByPrimaryKey(Integer id);
     //查询所有评论
-    List<Object> selectAll(int start);
+    List<CommentUserEntity> selectAll(int start);
     //查询所有单个用户评论
-    List<Object> selectAllByUserID(@Param("userID")int userID,@Param("start")int start);
+    List<CommentUserEntity> selectAllByUserID(@Param("userID")int userID,@Param("start")int start);
     //查询所有单个博客评论
-    List<Object> selectAllByBlogID(@Param("blogID")int blogID,@Param("start")int start);
+    List<CommentUserEntity> selectAllByBlogID(@Param("blogID")int blogID,@Param("start")int start);
 
     //查询评论下所有回复
-    List<Object> selectAllByParentID(@Param("parentID")int parentID,@Param("start")int start);
+    List<CommentUserEntity> selectAllByParentID(@Param("parentID")int parentID,@Param("start")int start);
     //更新评论
     int updateByPrimaryKey(Comment record);
 }

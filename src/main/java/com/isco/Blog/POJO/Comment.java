@@ -2,6 +2,10 @@ package com.isco.Blog.POJO;
 
 import java.util.Date;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 /**
  * @author sazhijie
  * 创建时间 2018/9/20 16:22
@@ -18,6 +22,8 @@ public class Comment {
 
     private Integer loveNum;
 
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date time;
 
     private Integer blogId;

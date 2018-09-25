@@ -32,8 +32,8 @@
 
 		<!-- 数据库连接 -->
 		<jdbcConnection driverClass="com.mysql.jdbc.Driver"
-			connectionURL="jdbc:mysql://120.79.184.27:3306/blog" userId="root"
-			password="root"></jdbcConnection>
+			connectionURL="jdbc:mysql://xxxxxxxxxx/blog" userId="xxxx"
+			password="xxxx"></jdbcConnection>
 		<javaTypeResolver
 			type="org.mybatis.generator.internal.types.JavaTypeResolverDefaultImpl">
 			<!-- true：使用BigDecimal对应DECIMAL和 NUMERIC数据类型 false：默认, scale>0;length>18：使用BigDecimal; 

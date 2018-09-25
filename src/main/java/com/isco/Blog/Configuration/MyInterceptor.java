@@ -8,6 +8,9 @@ import org.springframework.web.servlet.ModelAndView;
 
 public class MyInterceptor implements HandlerInterceptor {
 
+	/* 过滤器，允许跨域链接
+	 * @see org.springframework.web.servlet.HandlerInterceptor#postHandle(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse, java.lang.Object, org.springframework.web.servlet.ModelAndView)
+	 */
 	@Override
 	public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler,
 			ModelAndView modelAndView) throws Exception {

@@ -233,7 +233,7 @@
 	<!--查询用户评论过的博客 -->
 	<select id="selectByUserIdAndComment" resultMap="ListResultMap">
 		select
-		b.*,u.name,u.sign,u.img,blog_type.name as type
+		distinct b.*,u.name,u.sign,u.img,blog_type.name as type
 		from user
 		u,comment
 		c,blog b left join blog_type on b.blog_type_id=blog_type.id

@@ -17,6 +17,7 @@ import com.isco.Blog.POJO.Blog;
 import com.isco.Blog.POJO.BlogGroup;
 import com.isco.Blog.POJO.Comment;
 import com.isco.Blog.POJO.User;
+import com.isco.Blog.ResultEntity.CommentUserEntity;
 import com.isco.Blog.Service.CommentService;
 
 /**
@@ -24,11 +25,6 @@ import com.isco.Blog.Service.CommentService;
  * @author 张硕
  *
  */
-class Param1{
-	Blog blog;
-	int start;
-	int size;
-}
 @RestController
 public class CommentController {
 	
@@ -59,14 +55,14 @@ public class CommentController {
 	}
 	//列出所有评论
 	@RequestMapping(path="/listAllComment",method=RequestMethod.GET)
-	public List<Object> ListComment(Integer start) {
+	public List<CommentUserEntity> ListComment(Integer start) {
 		if(start==null)
 			return null;
 		return commentService.selectAll(start);
 	}
 	//列出博客内评论
 	@RequestMapping(path="/listBlogComment",method=RequestMethod.GET)
-	public List<Object> ListBlogComment(Integer  blogId,Integer start) {
+	public List<CommentUserEntity> ListBlogComment(Integer  blogId,Integer start) {
 		if(blogId==null || start==null)
 			return null;
 		return commentService.selectAllByBlogID(blogId,start);
@@ -74,7 +70,7 @@ public class CommentController {
 	}
 	//列出用户所有评论
 	@RequestMapping(path="/listUserComment",method=RequestMethod.GET)
-	public List<Object> ListUserComment(Integer userId,Integer start) {
+	public List<CommentUserEntity> ListUserComment(Integer userId,Integer start) {
 		if(userId==null || start==null)
 			return null;
 		return commentService.selectAllByUserID(userId,start);
@@ -82,7 +78,7 @@ public class CommentController {
 
 	//列出评论下回复
 	@RequestMapping(path="/listSubComment",method=RequestMethod.GET)
-	public List<Object> ListSubComment(Integer id,Integer start) {
+	public List<CommentUserEntity> ListSubComment(Integer id,Integer start) {
 		if(id==null || start==null)
 			return null;
 		return commentService.selectAllByParentID(id,start);

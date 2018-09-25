@@ -15,6 +15,11 @@ import com.isco.Blog.Mapper.UserMapper;
 import com.isco.Blog.ResultEntity.BlogUserEntity;
 import com.isco.Blog.Service.ScheduledService;
 
+/**
+ * @author sazhijie
+ * 创建时间 208/9/24 11:00
+ * 定时获取Top10用户和博客
+ */
 @Service
 @Transactional(propagation = Propagation.REQUIRES_NEW,isolation=Isolation.REPEATABLE_READ)
 public class ScheduledServiceImpl implements ScheduledService {
@@ -25,6 +30,9 @@ public class ScheduledServiceImpl implements ScheduledService {
 	@Autowired
 	private UserMapper userMapper;
 	
+	/* 博客列表
+	 * @see com.isco.Blog.Service.ScheduledService#getTopList()
+	 */
 	@Cacheable(value="toplist",key= "'scheduled_top_list'")
 	@Override
 	public List<BlogUserEntity> getTopList() {
@@ -32,6 +40,9 @@ public class ScheduledServiceImpl implements ScheduledService {
 		return list;
 	}
 
+	/* 缓存博客列表
+	 * @see com.isco.Blog.Service.ScheduledService#setTopList()
+	 */
 	@CachePut(value="toplist",key="'scheduled_top_list'")
 	@Scheduled(fixedDelay=300000)
 	@Override
@@ -40,6 +51,9 @@ public class ScheduledServiceImpl implements ScheduledService {
 		return list;
 	}
 
+	/* 用户列表
+	 * @see com.isco.Blog.Service.ScheduledService#getTopUser()
+	 */
 	@Cacheable(value="topuser",key= "'scheduled_top_user'")
 	@Override
 	public List<Object> getTopUser() {
@@ -47,6 +61,9 @@ public class ScheduledServiceImpl implements ScheduledService {
 		return userMapper.selectTopUser();
 	}
 
+	/* 缓存用户列表
+	 * @see com.isco.Blog.Service.ScheduledService#setTopUser()
+	 */
 	@CachePut(value="topuser",key="'scheduled_top_user'")
 	@Scheduled(fixedDelay=300000)
 	@Override

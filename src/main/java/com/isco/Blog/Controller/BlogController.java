@@ -234,6 +234,12 @@ public class BlogController {
 		return blogService.selectBlogWhitText(userId, blogId);
 	}
 	
+	/**查找博客
+	 * @param title
+	 * @param param
+	 * @param page
+	 * @return
+	 */
 	@RequestMapping(path="/searchBlog",method=RequestMethod.GET)
 	public Map<String,Object> searchBlog(String title,Integer param,Integer page){
 		if(param==null || page==null) {

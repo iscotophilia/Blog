@@ -4,10 +4,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.ibatis.annotations.Param;
-
 import com.isco.Blog.POJO.Blog;
-import com.isco.Blog.ResultEntity.BlogUserEntity;
 
 
 /**
