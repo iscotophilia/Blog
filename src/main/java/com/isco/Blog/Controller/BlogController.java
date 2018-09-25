@@ -59,7 +59,7 @@ public class BlogController {
 			} catch (IOException e) {
 				return -1;
 			}
-			path="http://120.79.184.27:81/blogimg/"+d+userId+"."+b;
+			path="http://xxxxxxxx/blogimg/"+d+userId+"."+b;
 		}
 		return blogService.insertBlog(title, userId, type, group, text, path,date);
 	}
