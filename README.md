@@ -1,9 +1,16 @@
 # Blog
-个人博客项目
+个人博客项目的后端实现
 
 使用技术：
 SpringBoot + Mybatis + Mysql + Redis
 
-主从同步
+Mysql主从同步
 
-缓存技术
+#Introduction
+Personal blog project back-end implementation
+
+The use of the technical：
+
+SpringBoot & Mybatis & Mysql & Redis
+
+Mysql Master & Slave
