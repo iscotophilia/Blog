@@ -160,10 +160,10 @@ public class UserController {
 		
 		User user = new User();
 		user.setId(id);
-		user.setImg("http://120.79.184.27:81/img/"+id+"."+b);
+		user.setImg("http://xxxxxximg/"+id+"."+b);
 		int i = userServise.updateByPrimaryKey(user);
 		map.put("result", i);
-		map.put("path", "http://120.79.184.27:81/img/"+id+"."+b);
+		map.put("path", "http://xxxxxx/img/"+id+"."+b);
 		return map;
 	}
 	
