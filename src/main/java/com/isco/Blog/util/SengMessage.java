@@ -35,7 +35,7 @@ public class SengMessage {
         // PostMethod post = new PostMethod("http://sms.webchinese.cn/web_api/");
         post.addRequestHeader("Content-Type",
                 "application/x-www-form-urlencoded;charset=gbk");// 在头文件中设置转码
-        NameValuePair[] data = { new NameValuePair("Uid", "iscotophilia"),// 注册的用户名
+        NameValuePair[] data = { new NameValuePair("Uid", "xxxxxx"),// 注册的用户名
                 new NameValuePair("Key", "76a81443335f2ad640db"),// 注册成功后，登录网站后得到的密钥
                 new NameValuePair("smsMob", number),// 手机号码
                 new NameValuePair("smsText", "您好，您本次注册的验证码为:"+check+", 5分钟内有效") };// 短信内容
