@@ -12,6 +12,8 @@ src/main/resource/generateConfig.xml用于对应数据库生成对应的Mapper�
 使用方法：
 使用Maven-build： 执行 mybatis-generator:generate
 
+数据库设计：
+
 #Introduction
 
 Personal blog project back-end implementation
