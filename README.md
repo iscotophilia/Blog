@@ -6,6 +6,8 @@ SpringBoot + Mybatis + Mysql + Redis
 
 Mysql主从同步
 
+其中发送短信功能使用第三方平台，位于com.isco.Blog.util包下
+
 #Introduction
 
 Personal blog project back-end implementation
